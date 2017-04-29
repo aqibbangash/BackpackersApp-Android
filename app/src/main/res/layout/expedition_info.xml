@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="4"
+            >
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="90dp"
+                android:layout_columnWeight="4"
+                android:layout_columnSpan="4"
+                android:gravity="fill_vertical"
+                android:layout_gravity="fill_horizontal"
+                android:background="#FFF"
+                android:padding="20dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                android:text="Two-day trip to salt ranges" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="90dp"
+                android:layout_columnWeight="1"
+                android:gravity="center"
+                android:layout_gravity="fill_horizontal"
+                android:background="@color/colorPrimaryDark"
+                android:textColor="#FFF"
+                android:text="Starting" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="90dp"
+                android:layout_columnWeight="1"
+                android:gravity="center"
+                android:layout_gravity="fill_horizontal"
+                android:background="@color/colorAccent"
+                android:textColor="#FFF"
+                android:text="Time" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="90dp"
+                android:layout_columnWeight="1"
+                android:gravity="center"
+                android:layout_gravity="fill_horizontal"
+                android:background="@color/colorPrimary"
+                android:textColor="#FFF"
+                android:text="End date" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="90dp"
+                android:layout_columnWeight="1"
+                android:gravity="center"
+                android:layout_gravity="fill_horizontal"
+                android:background="@color/colorPrimaryDark"
+                android:textColor="#FFF"
+                android:text="End time" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="90dp"
+                android:layout_columnWeight="3"
+                android:layout_columnSpan="3"
+                android:gravity="center"
+                android:layout_gravity="fill_horizontal"
+                android:background="#FFF"
+                android:textColor="@color/colorPrimaryDark"
+                android:text="Place of the event" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="90dp"
+                android:layout_columnWeight="1"
+                android:gravity="center"
+                android:layout_gravity="fill_horizontal"
+                android:background="@color/colorPrimary"
+                android:textColor="#FFF"
+                android:text="Fixed" />
+
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="90dp"
+                android:layout_columnWeight="1"
+                android:gravity="center"
+                android:layout_gravity="fill_horizontal"
+                android:background="@color/colorPrimaryDark"
+                android:textColor="#FFF"
+                android:text="Public" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="90dp"
+                android:layout_columnWeight="3"
+                android:layout_columnSpan="3"
+                android:gravity="center"
+                android:layout_gravity="fill_horizontal"
+                android:background="@color/colorAccent"
+                android:textColor="#FFF"
+                android:text="Name of the owner" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="90dp"
+                android:layout_columnWeight="4"
+                android:layout_columnSpan="4"
+                android:gravity="center"
+                android:layout_gravity="fill_horizontal"
+                android:background="@color/colorPrimary"
+                android:textColor="#FFF"
+                android:text="Description of the the expedition " />
+
+        </GridLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:textSize="20dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:text="Backpacker's Approved"
+            />
+        <ListView
+            android:id="@+id/approved_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </ListView>
+    </LinearLayout>
+</ScrollView>

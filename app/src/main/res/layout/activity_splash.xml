@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.kit.backpackers.project_kit.SplashActivity">
+    <TextView
+        android:layout_width = "wrap_content"
+        android:layout_height = "wrap_content"
+        android:text = "Welcome to"
+        android:id = "@+id/textView"
+        android:layout_below="@+id/imageView"
+        android:layout_centerHorizontal = "true"
+        android:textColor = "#000000"
+        android:textStyle="bold"
+        android:typeface="serif"
+        android:textSize = "25dp" />
+
+    <TextView
+        android:layout_width = "wrap_content"
+        android:layout_height = "wrap_content"
+        android:text = "Backpackers Kit"
+        android:typeface="serif"
+        android:id = "@+id/textView1"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal = "true"
+        android:textColor = "#000000"
+        android:textStyle="bold"
+        android:textSize = "30dp" />
+
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:text="Start your tour"
+        android:typeface="serif"
+        android:textStyle="bold"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:layout_centerInParent="true"
+        android:id="@+id/button"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="15dp"
+        android:background="#F89406"
+        android:onClick="sendMessage"
+        />
+    <ImageView
+        android:layout_width="250dp"
+        android:layout_height="190dp"
+        android:id="@+id/imageView"
+        android:background = "@drawable/logo"
+        android:layout="@+id/textView"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>

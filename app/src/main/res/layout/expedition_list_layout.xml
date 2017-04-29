@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="90dp"
+    android:background="#FFF"
+    android:descendantFocusability="blocksDescendants">
+        <ImageView
+            android:id="@+id/btn_expedition"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="40dp"
+            android:background="@color/colorPrimary"
+            android:text="12th Mar"
+            android:textColor="#FFF"
+            android:padding="1dp"
+
+            />
+        <TextView
+            android:id="@+id/txt_expedition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Expedition Groups"
+            android:layout_toRightOf="@+id/btn_expedition"
+            android:layout_marginTop="20dp"
+            android:textSize="20dp"
+            android:textColor="@color/colorPrimaryDark"
+            />
+        <TextView
+            android:id="@+id/txt_sub_expedition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="place of event"
+            android:layout_below="@+id/txt_expedition"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/btn_expedition"
+            />
+
+
+</RelativeLayout>

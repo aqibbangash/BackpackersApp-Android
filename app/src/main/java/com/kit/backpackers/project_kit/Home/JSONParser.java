@@ -1,4 +1,4 @@
-package com.kit.backpackers.project_kit;
+package com.kit.backpackers.project_kit.Home;
 
 import android.util.Log;
 

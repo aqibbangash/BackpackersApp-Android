@@ -5,12 +5,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.kit.backpackers.project_kit.SessionManagment.UserLoginSession;
+import com.kit.backpackers.project_kit.Home.HomeActivity;
+import com.kit.backpackers.project_kit.Utils.UserLoginSession;
+import com.kit.backpackers.project_kit.UserLogin.MainActivity;
 
 import java.util.HashMap;
 
 public class SplashActivity extends AppCompatActivity {
-//i have channged this code
+    //i have channged this code
     UserLoginSession userLoginSession;
     String _username;
 

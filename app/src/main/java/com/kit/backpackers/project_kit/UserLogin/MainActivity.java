@@ -1,4 +1,4 @@
-package com.kit.backpackers.project_kit;
+package com.kit.backpackers.project_kit.UserLogin;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -6,14 +6,16 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.kit.backpackers.project_kit.SessionManagment.UserLoginSession;
+import com.kit.backpackers.project_kit.Home.HomeActivity;
+import com.kit.backpackers.project_kit.Home.JSONParser;
+import com.kit.backpackers.project_kit.R;
+import com.kit.backpackers.project_kit.Utils.UserLoginSession;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -107,13 +109,9 @@ public class MainActivity extends AppCompatActivity {
             if (pDialog != null && pDialog.isShowing()) {
                 pDialog.dismiss();
             }
-
-            // Log.e("json answer", json.toString());
-
             if (json != null) {
                // Log.e("json answer", json.toString());
                 Toast.makeText(MainActivity.this, "Login was ....Successful !!!Begin exploring now", Toast.LENGTH_LONG).show();
-
                 try {
                   Log.e("json parse result " , json.getString("BackpackerID"));
                     String userid = json.getString("BackpackerID");
@@ -127,7 +125,6 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();}
 
             }else{
-//                Log.e("json not found", json.toString());
                 Toast.makeText(MainActivity.this, "Login was not....Successful!!!", Toast.LENGTH_LONG).show();
 
             }

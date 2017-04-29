@@ -1,8 +1,7 @@
-package com.kit.backpackers.project_kit;
+package com.kit.backpackers.project_kit.Home;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,7 +12,8 @@ import android.widget.Toast;
 
 import com.kit.backpackers.project_kit.Adapters.ExpeditionListAdapter;
 import com.kit.backpackers.project_kit.Models.Expedition;
-import com.kit.backpackers.project_kit.SessionManagment.UserLoginSession;
+import com.kit.backpackers.project_kit.R;
+import com.kit.backpackers.project_kit.Utils.UserLoginSession;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,20 +23,14 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
 
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class ExpeditionActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {

@@ -1,20 +1,18 @@
-package com.kit.backpackers.project_kit;
+package com.kit.backpackers.project_kit.Home;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.kit.backpackers.project_kit.Models.Expedition;
-import com.kit.backpackers.project_kit.SessionManagment.UserLoginSession;
+import com.kit.backpackers.project_kit.R;
+import com.kit.backpackers.project_kit.Utils.UserLoginSession;
 
 import java.util.HashMap;
 

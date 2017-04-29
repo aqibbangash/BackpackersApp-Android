@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.kit.backpackers.project_kit.DetailActivity">
+    tools:context="com.kit.backpackers.project_kit.Home.DetailActivity">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

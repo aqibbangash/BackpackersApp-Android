@@ -1,4 +1,4 @@
-package com.kit.backpackers.project_kit.SessionManagment;
+package com.kit.backpackers.project_kit.Utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;

@@ -10,7 +10,7 @@ import com.kit.backpackers.project_kit.SessionManagment.UserLoginSession;
 import java.util.HashMap;
 
 public class SplashActivity extends AppCompatActivity {
-
+//i have channged this code
     UserLoginSession userLoginSession;
     String _username;
 

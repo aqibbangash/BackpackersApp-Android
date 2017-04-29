@@ -13,6 +13,7 @@ import java.util.HashMap;
 
 public class SplashActivity extends AppCompatActivity {
     //i have channged this code
+    //testing comment
     UserLoginSession userLoginSession;
     String _username;
 

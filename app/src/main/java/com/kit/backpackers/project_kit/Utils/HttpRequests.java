@@ -40,10 +40,25 @@ public class HttpRequests {
         OkHttpClient client = new OkHttpClient();
 
         Request request = new Request.Builder()
-                .url("http://code-dataserver.cloudapp.net/backpacker_api/index.php/user/myexpedition/"+userid)
+                .url("http://code-dataserver.cloudapp.net/backpacker_api/index.php/user/myexpedition/" + userid)
                 .get()
                 .addHeader("cache-control", "no-cache")
                 .addHeader("postman-token", "5e927ea0-aebe-b58b-6be7-9c799172a24d")
+                .build();
+
+        Response response = client.newCall(request).execute();
+        return  response.body().string();
+    }
+
+    //get other expeditions
+    public static String GetAllExpeditions(String userid) throws IOException {
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url("http://code-dataserver.cloudapp.net/backpacker_api/index.php/user/otherexpedition/"+userid)
+                .get()
+                .addHeader("cache-control", "no-cache")
+                .addHeader("postman-token", "0ac701b1-270f-659d-16bf-fd65c0968a3d")
                 .build();
 
         Response response = client.newCall(request).execute();

@@ -124,6 +124,8 @@ public class MainActivity extends AppCompatActivity {
             super.onPostExecute(s);
             if(nDialog.isShowing())
                 nDialog.dismiss();
+
+            Toast.makeText(getApplicationContext() , s , Toast.LENGTH_LONG).show();
             try
             {
                 JSONObject jsonObj = new JSONObject(s);

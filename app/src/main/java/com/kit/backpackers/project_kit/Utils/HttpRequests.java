@@ -64,4 +64,19 @@ public class HttpRequests {
         Response response = client.newCall(request).execute();
         return  response.body().string();
     }
+
+    public static String GetExpById(String expid) throws IOException{
+
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url("http://code-dataserver.cloudapp.net/backpacker_api/index.php/user/getexpbyid/"+expid)
+                .get()
+                .addHeader("cache-control", "no-cache")
+                .addHeader("postman-token", "c8c32ef8-09d2-6552-9071-b5e33546791e")
+                .build();
+
+        Response response = client.newCall(request).execute();
+        return  response.body().string();
+    }
 }

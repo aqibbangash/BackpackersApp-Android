@@ -137,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
                         String email = c.getString("email");
 
                         Log.d("userdetais  ", user_id + "-------" + username + "-----" + email);
+                        user.createLoginSession(user_id , username , "");
                     }
 
 

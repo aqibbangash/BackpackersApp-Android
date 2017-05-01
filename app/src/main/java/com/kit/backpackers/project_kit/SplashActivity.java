@@ -21,6 +21,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        userLoginSession = new UserLoginSession(this);
         HashMap<String, String > userDetails = userLoginSession.getUserDetails();
         _username = userDetails.get(UserLoginSession.username);
     }

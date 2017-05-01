@@ -33,4 +33,20 @@ public class HttpRequests {
         Response response = client.newCall(request).execute();
         return response.body().string();
     }
+
+    //get my expedition api call
+    public  static String GetMyExpeditoin(String userid) throws IOException
+    {
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url("http://code-dataserver.cloudapp.net/backpacker_api/index.php/user/myexpedition/"+userid)
+                .get()
+                .addHeader("cache-control", "no-cache")
+                .addHeader("postman-token", "5e927ea0-aebe-b58b-6be7-9c799172a24d")
+                .build();
+
+        Response response = client.newCall(request).execute();
+        return  response.body().string();
+    }
 }

@@ -22,6 +22,7 @@
         <activity android:name=".Home.HomeActivity" />
         <activity android:name=".Home.ExpeditionActivity" />
         <activity android:name=".Home.DetailActivity" />
+        <activity android:name=".Home.HomeFragments.Myexpfragments.MyExpFragmentActivity"/>
         <activity android:name=".Home.HomeFragments.FragmentActivity"/>
         <activity android:name=".UserRegistration.RegistrationActivity"></activity>
     </application>

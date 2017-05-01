@@ -27,6 +27,7 @@ import java.util.HashMap;
 public class myExpDetailFragment extends Fragment{
 
     TextView exploc, expdes;
+    String _exploc, _expdes;
     String expid;
 
     public myExpDetailFragment() {
@@ -41,7 +42,7 @@ public class myExpDetailFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View layoutView = inflater.inflate(R.layout.fragment_one,
+        View layoutView = inflater.inflate(R.layout.my_exp_detail_fragment,
                 container, false);
 
         exploc = (TextView) layoutView.findViewById(R.id.textLocation);
@@ -110,11 +111,13 @@ public class myExpDetailFragment extends Fragment{
                 if (getData.length() > 0) {
                     for (int i = 0; i < getData.length(); i++) {
                         JSONObject c = getData.getJSONObject(i);
-                      //  exp_id[i] = c.getString("exp_id");
+                        _exploc = c.getString("exp_location");
+                        _expdes = c.getString("exp_descrption");
 
                     }
 
-
+                    exploc.setText(_exploc);
+                    expdes.setText(_expdes);
 
                 }
             } catch (Exception e) {

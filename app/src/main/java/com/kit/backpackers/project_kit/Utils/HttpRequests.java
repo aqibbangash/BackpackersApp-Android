@@ -1,5 +1,13 @@
 package com.kit.backpackers.project_kit.Utils;
 
+import java.io.IOException;
+
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
 /**
  * Created by Naila on 29/04/2017.
  */
@@ -7,4 +15,22 @@ package com.kit.backpackers.project_kit.Utils;
 
 //all if the API calls will be managed here.
 public class HttpRequests {
+
+    public static String UserLogin(String useremail , String userpassword) throws IOException
+    {
+        OkHttpClient client = new OkHttpClient();
+
+        MediaType mediaType = MediaType.parse("application/json");
+        RequestBody body = RequestBody.create(mediaType, "{\n\t\"email\":\""+useremail+"\",\n\t\"password\":\""+userpassword+"\"\n}");
+        Request request = new Request.Builder()
+                .url("http://code-dataserver.cloudapp.net/backpacker_api/index.php/user/login")
+                .post(body)
+                .addHeader("content-type", "application/json")
+                .addHeader("cache-control", "no-cache")
+                .addHeader("postman-token", "c7ae283f-785d-9672-99b1-2797ddcfcb4a")
+                .build();
+
+        Response response = client.newCall(request).execute();
+        return response.body().string();
+    }
 }

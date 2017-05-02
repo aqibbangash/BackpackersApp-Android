@@ -52,9 +52,9 @@ public class MyExpFragmentActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(new myExpDetailFragment(), "Profile");
-        adapter.addFrag(new myExpGroupFragment(), "Create a trip");
-        adapter.addFrag(new RequestFragment(), "Built expeditions");
+        adapter.addFrag(new myExpDetailFragment(), "Exp details");
+        adapter.addFrag(new myExpGroupFragment(), "My Group");
+        adapter.addFrag(new RequestFragment(), "Requests");
         viewPager.setAdapter(adapter);
     }
 

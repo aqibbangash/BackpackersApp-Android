@@ -89,7 +89,7 @@
             android:id="@+id/txt_expedition"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Built Expedition"
+            android:text="Build An Expedition"
             android:layout_toRightOf="@+id/btn_expedition"
             android:layout_marginTop="10dp"
             android:textSize="20dp"

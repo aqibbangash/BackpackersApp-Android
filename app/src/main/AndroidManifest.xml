@@ -18,13 +18,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".UserLogin.MainActivity"/>
+        <activity android:name=".UserLogin.MainActivity" />
         <activity android:name=".Home.HomeActivity" />
         <activity android:name=".Home.ExpeditionActivity" />
         <activity android:name=".Home.DetailActivity" />
-        <activity android:name=".Home.HomeFragments.Myexpfragments.MyExpFragmentActivity"/>
-        <activity android:name=".Home.HomeFragments.FragmentActivity"/>
-        <activity android:name=".UserRegistration.RegistrationActivity"></activity>
+        <activity android:name=".Home.HomeFragments.Myexpfragments.MyExpFragmentActivity" />
+        <activity android:name=".Home.HomeFragments.FragmentActivity" />
+        <activity android:name=".UserRegistration.RegistrationActivity" />
+        <activity android:name=".myExpDetailBtnActivity.poiActivity" />
+        <activity android:name=".BuildExpeditionActivity"></activity>
     </application>
 
 </manifest>

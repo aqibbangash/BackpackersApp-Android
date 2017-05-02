@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -29,6 +30,7 @@ public class myExpDetailFragment extends Fragment{
     TextView exploc, expdes;
     String _exploc, _expdes;
     String expid;
+    Button poi_create,activity_add;
 
     public myExpDetailFragment() {
         // Required empty public constructor
@@ -47,6 +49,8 @@ public class myExpDetailFragment extends Fragment{
 
         exploc = (TextView) layoutView.findViewById(R.id.textLocation);
         expdes = (TextView) layoutView.findViewById(R.id.textDesc);
+        poi_create = (Button) layoutView.findViewById(R.id.create_poi);
+        activity_add = (Button) layoutView.findViewById(R.id.create_activity);
 
         Intent a = getActivity().getIntent();
         expid = a.getStringExtra("expid");

@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,7 +37,8 @@ public class MyExpeditionGroupAdapter extends ArrayAdapter<String> {
 
     public class LoadViews
     {
-        TextView firstName , phone,gender,picture;
+        TextView firstName , phone,gender;
+        ImageView picture;
 
 
     }
@@ -52,7 +54,7 @@ public class MyExpeditionGroupAdapter extends ArrayAdapter<String> {
             viewHolder.firstName = (TextView) convertView.findViewById(R.id.name);
             viewHolder.phone = (TextView) convertView.findViewById(R.id.phone);
             viewHolder.gender = (TextView) convertView.findViewById(R.id.gender);
-            viewHolder.picture = (TextView) convertView.findViewById(R.id.picture);
+            viewHolder.picture = (ImageView) convertView.findViewById(R.id.picture);
 
             convertView.setTag(viewHolder);
         }else
@@ -62,7 +64,7 @@ public class MyExpeditionGroupAdapter extends ArrayAdapter<String> {
         viewHolder.firstName.setText(firstname[position]);
         viewHolder.phone.setText(phone[position]);
         viewHolder.gender.setText(gender[position]);
-        viewHolder.picture.setText(picture[position]);
+        //viewHolder.picture.setText(picture[position]);
 
 
 

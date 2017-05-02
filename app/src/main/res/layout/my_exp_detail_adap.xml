@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Location"
-        android:id="@+id/textView5"
+        android:id="@+id/exploc"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Descriptions"
-        android:id="@+id/textView6"
+        android:id="@+id/expdes"
         android:layout_below="@+id/textView5"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -50,26 +50,4 @@
         android:layout_below="@+id/textView6"
         android:layout_alignLeft="@+id/textView6"
         android:layout_alignStart="@+id/textView6" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Create POI"
-        android:id="@+id/create_poi"
-        android:layout_marginBottom="51dp"
-        android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@+id/create_activity"
-        android:layout_toStartOf="@+id/create_activity" />
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Create Activity"
-        android:id="@+id/create_activity"
-        android:layout_alignBottom="@+id/create_poi"
-        android:layout_alignLeft="@+id/textLocation"
-        android:layout_alignStart="@+id/textLocation" />
-
-
-</RelativeLayout>
+    </RelativeLayout>

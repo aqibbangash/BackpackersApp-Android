@@ -107,12 +107,14 @@ public class myExpDetailFragment extends Fragment{
             //parsing the json data to display on the list view
             try {
                 JSONObject jsonObj = new JSONObject(s);
-                JSONArray getData = jsonObj.getJSONArray("result");
+
+                JSONObject ob = jsonObj.getJSONObject("Expedition");
+               // JSONArray getData = jsonObj.getJSONArray("result");
 
                 //setting array size to the total data length
 
 
-                if (getData.length() > 0) {
+              /*  if (getData.length() > 0) {
                     for (int i = 0; i < getData.length(); i++) {
                         JSONObject c = getData.getJSONObject(i);
                         _exploc = c.getString("exp_location");
@@ -121,9 +123,11 @@ public class myExpDetailFragment extends Fragment{
                     }
 
                     exploc.setText(_exploc);
-                    expdes.setText(_expdes);
+                    expdes.setText(_expdes);*/
+                expdes.setText(ob.getString("Description"));
+                exploc.setText(ob.getString("Place"));
 
-                }
+
             } catch (Exception e) {
 
             }

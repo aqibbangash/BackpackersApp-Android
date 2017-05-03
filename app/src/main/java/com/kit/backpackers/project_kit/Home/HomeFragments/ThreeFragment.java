@@ -150,13 +150,13 @@ public class ThreeFragment extends Fragment {
 
                     //show on the list view...
                     created_by[i] = ob.getString("Name");
-                    exp_id[i] = ob.getString("Name");// = oob.getString("IdExpedition");
-                    exp_name[i] = ob.getString("Name");// = oob.getString("Name");
-                    exp_location[i] = ob.getString("Name");// = oob.getString("Place");
+                    exp_id[i]  = oob.getString("IdExpedition");
+                    exp_name[i] = oob.getString("Name");
+                    exp_location[i] = oob.getString("Place");
                 }
 
-             //   AllExpeditionAdapter adapter = new AllExpeditionAdapter(getActivity() , exp_id, exp_location, exp_name,created_by);
-              //  allexp.setAdapter(adapter);
+                AllExpeditionAdapter adapter = new AllExpeditionAdapter(getActivity() , exp_id, exp_location, exp_name,created_by);
+                allexp.setAdapter(adapter);
                 /*JSONObject jsonObj = new JSONObject(s);
                 JSONArray getData = jsonObj.getJSONArray("result");
 

@@ -56,7 +56,7 @@ public class HttpRequests {
         OkHttpClient client = new OkHttpClient();
 
         Request request = new Request.Builder()
-                .url("https://backpackersapp.azurewebsites.net/api/Users/Upcoming/"+userid)
+                .url("https://backpackersapp.azurewebsites.net/api/Users/Upcoming/" + userid)
                 .get()
                 .addHeader("cache-control", "no-cache")
                 .addHeader("postman-token", "18a5a708-35b4-319f-3ebf-6095f226b095")
@@ -71,10 +71,10 @@ public class HttpRequests {
         OkHttpClient client = new OkHttpClient();
 
         Request request = new Request.Builder()
-                .url("http://code-dataserver.cloudapp.net/backpacker_api/index.php/user/getexpbyid/"+expid)
+                .url("https://backpackersapp.azurewebsites.net/api/Users/Expeditions/Details/"+expid)
                 .get()
                 .addHeader("cache-control", "no-cache")
-                .addHeader("postman-token", "c8c32ef8-09d2-6552-9071-b5e33546791e")
+                .addHeader("postman-token", "02ef4c82-e0af-fbe6-878d-d6acb1e392d0")
                 .build();
 
         Response response = client.newCall(request).execute();

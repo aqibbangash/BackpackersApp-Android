@@ -5,10 +5,12 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.kit.backpackers.project_kit.Home.HomeFragments.Adapters.AllExpeditionAdapter;
@@ -18,6 +20,7 @@ import com.kit.backpackers.project_kit.Utils.HttpRequests;
 import com.kit.backpackers.project_kit.Utils.UserLoginSession;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -121,7 +124,40 @@ public class ThreeFragment extends Fragment {
 
             //parsing the json data to display on the list view
             try {
-                JSONObject jsonObj = new JSONObject(s);
+                JSONArray getData = new JSONArray(s);
+
+                //setting array size to the total data length
+                exp_id = new String[getData.length()];
+                exp_location = new String[getData.length()];
+                exp_name = new String[getData.length()];
+                created_by = new String[getData.length()];
+
+                for(int i=0; i < getData.length(); i++) {
+                    JSONObject object = getData.getJSONObject(i);
+                  //  Toast.makeText(getActivity(), object.toString(), Toast.LENGTH_SHORT).show();
+                    Log.d("Result is here;;;...", object.toString());
+
+                    //geeting the back packer object here...
+                    JSONObject ob = object.getJSONObject("Backpacker");
+                    //Toast.makeText(getActivity(), ob.getString("Name"), Toast.LENGTH_SHORT).show();
+                    Log.d("for backpackers..", ob.toString());
+
+
+                    //gtting info for expedition here..
+                    JSONObject oob = object.getJSONObject("Expedition");
+                 //   Toast.makeText(getActivity(), oob.toString(), Toast.LENGTH_SHORT).show();
+                    Log.d("for Expedition..", oob.toString());
+
+                    //show on the list view...
+                    created_by[i] = ob.getString("Name");
+                    exp_id[i] = ob.getString("Name");// = oob.getString("IdExpedition");
+                    exp_name[i] = ob.getString("Name");// = oob.getString("Name");
+                    exp_location[i] = ob.getString("Name");// = oob.getString("Place");
+                }
+
+             //   AllExpeditionAdapter adapter = new AllExpeditionAdapter(getActivity() , exp_id, exp_location, exp_name,created_by);
+              //  allexp.setAdapter(adapter);
+                /*JSONObject jsonObj = new JSONObject(s);
                 JSONArray getData = jsonObj.getJSONArray("result");
 
                 //setting array size to the total data length
@@ -141,13 +177,12 @@ public class ThreeFragment extends Fragment {
                     }
 
                     //passing data to My Expedition Adpater to show the data on list view
-                    AllExpeditionAdapter adapter = new AllExpeditionAdapter(getActivity() , exp_id, exp_location, exp_name,created_by);
-                    allexp.setAdapter(adapter);
+                    */
 
-                }
-            } catch (Exception e) {
-
+                } catch (JSONException e1) {
+                e1.printStackTrace();
             }
+
 
 
         }

@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.kit.backpackers.project_kit.Home.HomeFragments.Myexpfragments.MyExpFragmentActivity;
 import com.kit.backpackers.project_kit.R;
-import com.kit.backpackers.project_kit.myExpDetailBtnActivity.poiActivity;
+
 
 /**
  * Created by Naila Kayani on 5/2/2017.
@@ -65,9 +65,9 @@ public class myExpDetailAdapter extends ArrayAdapter<String> {
             @Override
             public void onClick(View view) {
                 // Toast.makeText(context , exp_id[position] , Toast.LENGTH_LONG).show();
-                Intent intent=new Intent(context, poiActivity.class);
-                intent.putExtra("expid" , exp_id[position]);
-                context.startActivity(intent);
+               // Intent intent=new Intent(context, poiActivity.class);
+                //intent.putExtra("expid" , exp_id[position]);
+               // context.startActivity(intent);
             }
         });
 

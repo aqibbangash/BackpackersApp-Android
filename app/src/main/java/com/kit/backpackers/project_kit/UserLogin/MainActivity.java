@@ -129,19 +129,19 @@ public class MainActivity extends AppCompatActivity {
             try
             {
                 JSONObject jsonObj = new JSONObject(s);
-                JSONArray getData = jsonObj.getJSONArray("result");
+                //JSONArray getData = jsonObj.getJSONArray("result");
 
-                if(getData.length() > 0) {
-                    for (int i = 0; i < getData.length(); i++) {
-                        JSONObject c = getData.getJSONObject(i);
-                        String user_id = c.getString("user_id");
-                        String username = c.getString("firstname");
-                        String email = c.getString("email");
+                if(jsonObj.length() > 0) {
+                    //for (int i = 0; i < getData.length(); i++) {
+                       // JSONObject c = getData.getJSONObject(i);
+                        String user_id = jsonObj.getString("BackpackerID");
+                        String username = jsonObj.getString("Name");
+                        String email = jsonObj.getString("UserID");
 
                         Log.d("userdetais  ", user_id + "-------" + username + "-----" + email);
                         user.createLoginSession(user_id , username , "");
-                    }
-
+                   // }
+                        Toast.makeText(getApplicationContext() , "Login done"+username , Toast.LENGTH_LONG).show();
 
                     startActivity(new Intent(MainActivity.this, HomeActivity.class));
                     finish();

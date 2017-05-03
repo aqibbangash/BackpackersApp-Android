@@ -21,13 +21,14 @@ public class HttpRequests {
         OkHttpClient client = new OkHttpClient();
 
         MediaType mediaType = MediaType.parse("application/json");
-        RequestBody body = RequestBody.create(mediaType, "{\n\t\"email\":\""+useremail+"\",\n\t\"password\":\""+userpassword+"\"\n}");
+       // RequestBody body = RequestBody.create(mediaType, "{\n\t\"Email\" : \""+useremail+"\",\n\t\"Password\" : \""+userpassword+"\"\n}");
+        RequestBody body = RequestBody.create(mediaType, "{\n\t\"Email\" : \"hahmed412@gmail.com\",\n\t\"Password\" : \"Qwerty12!@\"\n}");
         Request request = new Request.Builder()
-                .url("http://code-dataserver.cloudapp.net/backpacker_api/index.php/user/login")
+                .url("https://backpackersapp.azurewebsites.net/api/Users/Login")
                 .post(body)
                 .addHeader("content-type", "application/json")
                 .addHeader("cache-control", "no-cache")
-                .addHeader("postman-token", "c7ae283f-785d-9672-99b1-2797ddcfcb4a")
+                .addHeader("postman-token", "6ff050b9-1b3e-5ee7-3e88-5318d681a972")
                 .build();
 
         Response response = client.newCall(request).execute();
@@ -40,10 +41,10 @@ public class HttpRequests {
         OkHttpClient client = new OkHttpClient();
 
         Request request = new Request.Builder()
-                .url("http://code-dataserver.cloudapp.net/backpacker_api/index.php/user/myexpedition/" + userid)
+                .url("https://backpackersapp.azurewebsites.net/api/Users/Expeditions/" + userid)
                 .get()
                 .addHeader("cache-control", "no-cache")
-                .addHeader("postman-token", "5e927ea0-aebe-b58b-6be7-9c799172a24d")
+                .addHeader("postman-token", "51de8709-cfd9-c296-9283-197ceae909e7")
                 .build();
 
         Response response = client.newCall(request).execute();
@@ -55,10 +56,10 @@ public class HttpRequests {
         OkHttpClient client = new OkHttpClient();
 
         Request request = new Request.Builder()
-                .url("http://code-dataserver.cloudapp.net/backpacker_api/index.php/user/otherexpedition/"+userid)
+                .url("https://backpackersapp.azurewebsites.net/api/Users/Upcoming/"+userid)
                 .get()
                 .addHeader("cache-control", "no-cache")
-                .addHeader("postman-token", "0ac701b1-270f-659d-16bf-fd65c0968a3d")
+                .addHeader("postman-token", "18a5a708-35b4-319f-3ebf-6095f226b095")
                 .build();
 
         Response response = client.newCall(request).execute();

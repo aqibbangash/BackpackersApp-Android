@@ -4,10 +4,12 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.kit.backpackers.project_kit.Home.HomeFragments.Adapters.MyExpeditionAdapter;
@@ -121,8 +123,11 @@ public class OneFragment extends Fragment {
 
             //parsing the json data to display on the list view
                 try {
-                    JSONObject jsonObj = new JSONObject(s);
-                    JSONArray getData = jsonObj.getJSONArray("result");
+                   // JSONObject jsonObj = new JSONObject(s);
+                    JSONArray getData = new JSONArray(s); //jsonObj.getJSONArray("");
+
+                    Toast.makeText(getActivity() , getData.toString() , Toast.LENGTH_LONG).show();
+                    Log.d("result for exp" , getData.toString());
 
                     //setting array size to the total data length
                     exp_id = new String[getData.length()];
@@ -132,11 +137,11 @@ public class OneFragment extends Fragment {
                     if (getData.length() > 0) {
                         for (int i = 0; i < getData.length(); i++) {
                             JSONObject c = getData.getJSONObject(i);
-                            exp_id[i] = c.getString("exp_id");
-                            exp_location[i] = c.getString("exp_location");
-                            exp_name[i] = c.getString("exp_name");
-                        }
+                            exp_id[i] = c.getString("IdExpedition");
+                            exp_name[i] = c.getString("Name");
+                            exp_location[i] = c.getString("Place");
 
+                        }
                         //passing data to My Expedition Adpater to show the data on list view
                         MyExpeditionAdapter adapter = new MyExpeditionAdapter(getActivity() , exp_id, exp_location, exp_name);
                         myallCols.setAdapter(adapter);

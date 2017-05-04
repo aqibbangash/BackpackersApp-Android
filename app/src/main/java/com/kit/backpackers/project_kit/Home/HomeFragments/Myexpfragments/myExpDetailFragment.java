@@ -50,7 +50,7 @@ public class myExpDetailFragment extends Fragment{
         exploc = (TextView) layoutView.findViewById(R.id.textLocation);
         expdes = (TextView) layoutView.findViewById(R.id.textDesc);
         poi_create = (Button) layoutView.findViewById(R.id.create_poi);
-        activity_add = (Button) layoutView.findViewById(R.id.create_activity);
+        //activity_add = (Button) layoutView.findViewById(R.id.create_activity);
 
         Intent a = getActivity().getIntent();
         expid = a.getStringExtra("expid");

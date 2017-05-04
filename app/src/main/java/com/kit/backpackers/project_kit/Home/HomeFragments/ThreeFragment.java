@@ -156,7 +156,11 @@ public class ThreeFragment extends Fragment {
                 }
 
                 AllExpeditionAdapter adapter = new AllExpeditionAdapter(getActivity() , exp_id, exp_location, exp_name,created_by);
+
+              allexp.setAdapter(adapter);
+
                 allexp.setAdapter(adapter);
+
                 /*JSONObject jsonObj = new JSONObject(s);
                 JSONArray getData = jsonObj.getJSONArray("result");
 

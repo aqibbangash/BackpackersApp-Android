@@ -16,6 +16,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.kit.backpackers.project_kit.Home.HomeFragments.Adapters.MyExpeditionAdapter;
 import com.kit.backpackers.project_kit.R;
 import com.kit.backpackers.project_kit.Utils.HttpRequests;
+import com.kit.backpackers.project_kit.Utils.MapsActivity;
 import com.kit.backpackers.project_kit.Utils.UserLoginSession;
 
 import org.json.JSONArray;
@@ -49,11 +50,25 @@ public class myExpDetailFragment extends Fragment{
 
         exploc = (TextView) layoutView.findViewById(R.id.textLocation);
         expdes = (TextView) layoutView.findViewById(R.id.textDesc);
-        poi_create = (Button) layoutView.findViewById(R.id.create_poi);
+        poi_create = (Button) layoutView.findViewById(R.id.event_btn);
+
+
+
+       //
         //activity_add = (Button) layoutView.findViewById(R.id.create_activity);
 
         Intent a = getActivity().getIntent();
         expid = a.getStringExtra("expid");
+
+        poi_create.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent getMpas = new Intent(getActivity(), MapsActivity.class);
+                getMpas.putExtra("expid" , expid);
+                startActivity(getMpas);
+               // startActivity(new Intent(getActivity(), MapsActivity.class));
+            }
+        });
 
 
 

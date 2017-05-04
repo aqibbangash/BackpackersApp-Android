@@ -60,10 +60,12 @@
         android:background="@color/colorPrimary"
         android:text="Start Event"
         android:textSize="20dp"
-        android:id="@+id/create_poi"
+        android:id="@+id/event_btn"
         android:layout_marginBottom="51dp"
         android:layout_alignParentBottom="true"
-       android:layout_centerHorizontal="true" />
+       android:layout_centerHorizontal="true"
+        android:onClick="start event"
+        />
 
 
 

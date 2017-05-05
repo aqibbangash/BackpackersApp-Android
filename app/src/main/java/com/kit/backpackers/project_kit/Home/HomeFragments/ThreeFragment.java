@@ -157,28 +157,6 @@ public class ThreeFragment extends Fragment {
 
                 AllExpeditionAdapter adapter = new AllExpeditionAdapter(getActivity() , exp_id, exp_location, exp_name,created_by);
                 allexp.setAdapter(adapter);
-                /*JSONObject jsonObj = new JSONObject(s);
-                JSONArray getData = jsonObj.getJSONArray("result");
-
-                //setting array size to the total data length
-                exp_id = new String[getData.length()];
-                exp_location = new String[getData.length()];
-                exp_name = new String[getData.length()];
-                created_by = new String[getData.length()];
-
-
-                if (getData.length() > 0) {
-                    for (int i = 0; i < getData.length(); i++) {
-                        JSONObject c = getData.getJSONObject(i);
-                        exp_id[i] = c.getString("exp_id");
-                        exp_location[i] = c.getString("exp_location");
-                        exp_name[i] = c.getString("exp_name");
-                        created_by[i] = c.getString("created_by");
-                    }
-
-                    //passing data to My Expedition Adpater to show the data on list view
-                    */
-
                 } catch (JSONException e1) {
                 e1.printStackTrace();
             }

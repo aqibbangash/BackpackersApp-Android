@@ -52,9 +52,9 @@ public class FragmentActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(new OneFragment(), "My Expedition");
-        adapter.addFrag(new TwoFragment(), "Joined Expedition");
-        adapter.addFrag(new ThreeFragment(), "Other Expeditions");
+        adapter.addFrag(new OneFragment(), "Created");
+        adapter.addFrag(new TwoFragment(), "Joined");
+        adapter.addFrag(new ThreeFragment(), "All");
 
         viewPager.setAdapter(adapter);
     }

@@ -2,7 +2,10 @@ package com.kit.backpackers.project_kit.Utils;
 
 
 import android.Manifest;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
@@ -12,6 +15,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -21,6 +25,12 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import com.kit.backpackers.project_kit.R;
+
+import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import javax.net.ssl.SSLEngineResult;
 
 public class MapsActivity extends AppCompatActivity implements
         GoogleMap.OnMyLocationButtonClickListener,
@@ -44,6 +54,9 @@ public class MapsActivity extends AppCompatActivity implements
     private GoogleMap mMap;
     Location location_l = null;
 
+    Timer timer;
+    UserLoginSession userLoginSession;
+    String userid;
 
 
     @Override
@@ -56,8 +69,48 @@ public class MapsActivity extends AppCompatActivity implements
         mapFragment.getMapAsync(this);
 
 
+        userLoginSession = new UserLoginSession(this);
+        HashMap<String , String> getuserid = userLoginSession.getUserDetails();
+        userid = getuserid.get(UserLoginSession.userid);
+        startService(new Intent(MapsActivity.this, LocationUpdateService.class));
+
+        //sending object to your service class in onCreate Method
+        try {
+            TimerTask timerTask = new TimerTask() {
+
+                @Override
+                public void run() {
+
+                    Intent updateDriver = new Intent(MapsActivity.this,
+                            UIService.class);
+                    updateDriver.putExtra("driver_id",
+                            String.valueOf(userid));
+
+                    startService(updateDriver);
+
+                }
+            };
+
+            timer = new Timer();
+            timer.schedule(timerTask, 5000, 7000);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        registerReceiver(receiver, new IntentFilter(UIService.NOTIFICATION));
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerReceiver(receiver, new IntentFilter(UIService.NOTIFICATION));
+    }
+
+    @Override
+    protected void onDestroy() {
+        this.unregisterReceiver(receiver);
+        super.onDestroy();
+    }
 
     @Override
     public void onMapReady(GoogleMap map) {
@@ -153,6 +206,26 @@ public class MapsActivity extends AppCompatActivity implements
     public void onMapLongClick(LatLng latLng) {
 
     }
+
+
+
+
+    //broad cast receiver
+    BroadcastReceiver receiver = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            Bundle bundle = intent.getExtras();
+            if (bundle != null) {
+                int resultCode = bundle.getInt(UIService.RESULT);
+                if (resultCode == RESULT_OK) {
+                    //get all the results from your services over here...
+                    String locationResult = bundle.getString("userlocations");
+                    Toast.makeText(getApplicationContext(), locationResult , Toast.LENGTH_LONG).show();
+                }
+
+            }
+        }
+
+    };//end of broadcast receiver
 
 
 

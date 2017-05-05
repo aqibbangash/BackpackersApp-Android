@@ -126,7 +126,7 @@ public class OneFragment extends Fragment {
                    // JSONObject jsonObj = new JSONObject(s);
                     JSONArray getData = new JSONArray(s); //jsonObj.getJSONArray("");
 
-                    Toast.makeText(getActivity() , getData.toString() , Toast.LENGTH_LONG).show();
+                   // Toast.makeText(getActivity() , getData.toString() , Toast.LENGTH_LONG).show();
                     Log.d("result for exp" , getData.toString());
 
                     //setting array size to the total data length

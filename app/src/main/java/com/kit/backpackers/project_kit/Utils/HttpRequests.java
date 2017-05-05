@@ -80,4 +80,37 @@ public class HttpRequests {
         Response response = client.newCall(request).execute();
         return  response.body().string();
     }
+
+    public static String UpdateExpStatus(String expidd, String state) throws IOException
+    {
+        OkHttpClient client = new OkHttpClient();
+
+        MediaType mediaType = MediaType.parse("application/json");
+        RequestBody body = RequestBody.create(mediaType, " {\n    \"IdExpedition\": \""+expidd+"\",\n    \"State\": \""+state+"\"\n  }");
+        Request request = new Request.Builder()
+                .url("https://backpackersapp.azurewebsites.net/api/Users/Expeditions/State/"+expidd)
+                .put(body)
+                .addHeader("content-type", "application/json")
+                .addHeader("cache-control", "no-cache")
+                .addHeader("postman-token", "f848a2cb-0a86-8a8d-8897-81852c81bf1a")
+                .build();
+
+        Response response = client.newCall(request).execute();
+        return  response.body().string();
+    }
+
+    public static String GetJoinedExpd(String useid) throws IOException
+    {
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url("https://backpackersapp.azurewebsites.net/api/Users/Events/"+useid)
+                .get()
+                .addHeader("cache-control", "no-cache")
+                .addHeader("postman-token", "3a4a8292-29db-8f35-3b36-31ca447cb534")
+                .build();
+
+        Response response = client.newCall(request).execute();
+        return response.body().string();
+    }
 }

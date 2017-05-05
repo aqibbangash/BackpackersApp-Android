@@ -88,6 +88,7 @@ public class LocationUpdateService extends Service implements
     private ArrayList<LocationVo> mLocationData;
 
     String userid;
+    String username;
 
     @Override
     public void onCreate() {
@@ -95,6 +96,7 @@ public class LocationUpdateService extends Service implements
         loginSession = new UserLoginSession(this);
         HashMap<String, String> details = loginSession.getUserDetails();
         userid = details.get(UserLoginSession.userid);
+        username = details.get(UserLoginSession.username);
 
         // Kick off the process of building a GoogleApiClient and requesting the LocationServices
         // API.
@@ -191,16 +193,15 @@ public class LocationUpdateService extends Service implements
             //make the server call here..
             OkHttpClient client = new OkHttpClient();
 
-            MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
-            RequestBody body = RequestBody.create(mediaType, "latitude=" + mCurrentLocation.getLatitude() + "&longitude="+mCurrentLocation.getLongitude());
+            MediaType mediaType = MediaType.parse("application/json");
+            RequestBody body = RequestBody.create(mediaType, "{\n    \"BackpackerId\": \""+userid+"\",\n    \"ExpeditionId\": \"5\",\n    \"Name\": \""+username+"\",\n    \"Lat\": \""+mCurrentLocation.getLatitude()+"\",\n    \"Lng\": \""+ mCurrentLocation.getLongitude()+"\"\n  }");
             Request request = new Request.Builder()
-                    .url("http://deals.dev11.com/api/hyperlocaldealsapi/index.php?command=location&userid="+userid)
+                    .url("https://backpackersapp.azurewebsites.net/api/Tracks")
                     .post(body)
-                    .addHeader("content-type", "application/x-www-form-urlencoded")
+                    .addHeader("content-type", "application/json")
                     .addHeader("cache-control", "no-cache")
-                    .addHeader("postman-token", "e45c07ae-ed38-b6d6-4128-6855a1bfc8df")
+                    .addHeader("postman-token", "f0870692-9945-2775-5c3e-82402a9d418d")
                     .build();
-
 
             Response response = client.newCall(request).execute();
             Log.d("Location Updates", response.body().string());

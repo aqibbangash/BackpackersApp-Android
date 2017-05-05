@@ -58,20 +58,20 @@
         android:fontFamily="serif"
         android:textColor="#000"
         android:layout_marginBottom="8dp"
-        android:id="@+id/textLocation"
+        android:id="@+id/textLocationA"
         android:layout_alignBottom="@+id/textView5"
         android:layout_toRightOf="@+id/textView5"
         android:layout_alignRight="@+id/event_btn"
         android:layout_alignEnd="@+id/event_btn" />
 
-   <ScrollView
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
 
-       >
+        >
 
 
-   </ScrollView>
+    </ScrollView>
 
     <TextView
         android:layout_width="wrap_content"
@@ -83,26 +83,26 @@
         android:text="Small Text"
         android:fontFamily="serif"
         android:padding="15dp"
-        android:id="@+id/textDesc"
+        android:id="@+id/textDescA"
         android:layout_below="@+id/textView6"
         android:layout_alignLeft="@+id/textView6"
         android:layout_alignStart="@+id/textView6"
         android:layout_alignRight="@+id/textLocation"
         android:layout_alignEnd="@+id/textLocation" />
 
-       <TextView
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:id="@+id/start_Date_txt"
-           android:layout_below="@+id/textDesc"
-           android:textAppearance="?android:attr/textAppearanceLarge"
-           android:text="Start Date :"
-           android:fontFamily="serif"
-           android:padding="15dp"
-           android:layout_marginLeft="10dp"
-           android:textStyle="bold"
-           android:layout_marginTop="10dp"
-           />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/start_Date_txt"
+        android:layout_below="@+id/textDesc"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Start Date :"
+        android:fontFamily="serif"
+        android:padding="15dp"
+        android:layout_marginLeft="10dp"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -117,7 +117,7 @@
         android:layout_toRightOf="@+id/start_Date_txt"
         android:layout_alignRight="@+id/event_btn"
         android:layout_alignEnd="@+id/event_btn"
-         />
+        />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -153,17 +153,16 @@
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
-        android:text="Start Event"
+        android:text="Waiting to start..."
         android:textStyle="bold"
         android:textColor="#FFF"
         android:drawableLeft="@mipmap/start_event"
         android:textSize="20dp"
         android:fontFamily="serif"
-        android:id="@+id/event_btn"
+        android:id="@+id/event_btnA"
         android:layout_marginBottom="71dp"
         android:layout_alignParentBottom="true"
-       android:layout_centerHorizontal="true"
-        android:onClick="start event"
+        android:layout_centerHorizontal="true"
 
         />
 

@@ -1,6 +1,7 @@
 package com.kit.backpackers.project_kit.Home.HomeFragments.Adapters;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.kit.backpackers.project_kit.Home.HomeFragments.Myexpfragments.MyExpFragmentActivity;
 import com.kit.backpackers.project_kit.R;
 
 /**
@@ -66,7 +68,10 @@ public class AllExpeditionAdapter extends ArrayAdapter<String> {
         viewHolder.btn_exp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, exp_id[position], Toast.LENGTH_LONG).show();
+               // Toast.makeText(context, exp_id[position], Toast.LENGTH_LONG).show();
+                Intent intent=new Intent(context, MyExpFragmentActivity.class);
+                intent.putExtra("expid" , exp_id[position]);
+                context.startActivity(intent);
             }
         });
 

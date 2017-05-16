@@ -31,7 +31,7 @@ import java.util.HashMap;
 
 public class myExpDetailFragment extends Fragment{
 
-    TextView exploc, expdes;
+    TextView exploc, expdes,s_date,end_date;
     String _exploc, _expdes;
     String expid;
     Button poi_create,activity_add;
@@ -56,22 +56,22 @@ public class myExpDetailFragment extends Fragment{
 
         exploc = (TextView) layoutView.findViewById(R.id.textLocation);
         expdes = (TextView) layoutView.findViewById(R.id.textDesc);
-<<<<<<< HEAD
-<<<<<<< HEAD
+        s_date = (TextView) layoutView.findViewById(R.id.date_s);
+        end_date = (TextView) layoutView.findViewById(R.id.date_end);
+
+
        // poi_create = (Button) layoutView.findViewById(R.id.create_poi);
        // activity_add = (Button) layoutView.findViewById(R.id.create_activity);
-=======
-        poi_create = (Button) layoutView.findViewById(R.id.create_poi);
-=======
+
+
         poi_create = (Button) layoutView.findViewById(R.id.event_btn);
 
 
 
 
-       //
->>>>>>> 9f1c8e605fcfb5ad7a5c729c1559eecdbfde8bb6
+
         //activity_add = (Button) layoutView.findViewById(R.id.create_activity);
->>>>>>> c1392feae6e13a2852febcc89a90938717c01dca
+//whatsapp......
 
         Intent a = getActivity().getIntent();
         expid = a.getStringExtra("expid");
@@ -82,6 +82,9 @@ public class myExpDetailFragment extends Fragment{
 
         if( _expidSession != null){
             poi_create.setText("Continue Event");
+            if(!_expidSession.equalsIgnoreCase(expid)){
+                poi_create.setEnabled(false);
+            }
         }
 
         poi_create.setOnClickListener(new View.OnClickListener() {
@@ -176,7 +179,8 @@ public class myExpDetailFragment extends Fragment{
                 Toast.makeText(getActivity() , ob.getString("IdExpedition"), Toast.LENGTH_LONG).show();
                 expdes.setText(ob.getString("Description"));
                 exploc.setText(ob.getString("Place"));
-
+                s_date.setText(ob.getString("StartDate"));
+                end_date.setText(ob.getString("EndDate"));
 
 
             } catch (Exception e) {

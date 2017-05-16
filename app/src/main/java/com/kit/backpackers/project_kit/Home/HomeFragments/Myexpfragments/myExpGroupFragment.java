@@ -139,7 +139,11 @@ public class myExpGroupFragment extends Fragment {
                     }
 
                     //passing data to My Expedition Adpater to show the data on list view
-                    MyExpeditionAdapter adapter = new MyExpeditionAdapter(getActivity() , exp_id, exp_location, exp_name);
+
+                    //MyExpeditionAdapter adapter = new MyExpeditionAdapter(getActivity(), exp_id, exp_location, exp_name, exp_name);
+
+
+                   MyExpeditionAdapter adapter = new MyExpeditionAdapter(getActivity() , exp_id, exp_location, exp_name);
                     myallCols.setAdapter(adapter);
 
                 }

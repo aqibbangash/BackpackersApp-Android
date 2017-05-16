@@ -3,9 +3,11 @@ package com.kit.backpackers.project_kit.Home;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +16,8 @@ import android.widget.TextView;
 
 import com.kit.backpackers.project_kit.Home.HomeFragments.FragmentActivity;
 import com.kit.backpackers.project_kit.R;
+import com.kit.backpackers.project_kit.UserLogin.MainActivity;
+import com.kit.backpackers.project_kit.Utils.NotificationService;
 import com.kit.backpackers.project_kit.Utils.UserLoginSession;
 
 import java.util.HashMap;
@@ -29,7 +33,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private Button btnGroups;
     private Button btnExpedition;
     private Button btnTrack;
-    private Button btnSos;
+    private Button btnlogout;
+    ImageView lg_button;
 
     /**
      * Find the Views in the layout<br />
@@ -41,12 +46,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         btnGroups = (Button)findViewById( R.id.btn_groups );
         btnExpedition = (Button)findViewById( R.id.btn_expedition );
         btnTrack = (Button)findViewById( R.id.btn_track );
-        btnSos = (Button)findViewById( R.id.btn_sos );
+        lg_button = (ImageView) findViewById( R.id.lg_button );
 
         btnGroups.setOnClickListener(this);
         btnExpedition.setOnClickListener( this );
         btnTrack.setOnClickListener( this );
-        btnSos.setOnClickListener( this );
+        lg_button.setOnClickListener( this );
     }
 
 
@@ -59,8 +64,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             // Handle clicks for btnExpedition
         } else if ( v == btnTrack ) {
             // Handle clicks for btnTrack
-        } else if ( v == btnSos ) {
-            // Handle clicks for btnSos
+        }
+        else if ( v == lg_button ) {
+            // Handle clicks for btnTrack
+            userLoginSession.logoutUser();
+            startActivity(new Intent(HomeActivity.this, MainActivity.class));
         }
     }
 
@@ -79,12 +87,18 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         _username = userDetails.get(UserLoginSession.username);
         _picture = userDetails.get(UserLoginSession.picture);
         displayName.setText(_username);
+
+       // startService(new Intent(HomeActivity.this, NotificationService.class));
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+      //  getMenuInflater().inflate(R.menu.menu_main, menu);
+       // return true;
+        MenuInflater inflater = getMenuInflater();
+
+        inflater.inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item)

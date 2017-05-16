@@ -33,6 +33,7 @@ public class TwoFragment extends Fragment {
     String[] exp_location;
     String[] exp_name;
     String[] created_by;
+    String[] exp_state;
     String userid;
     UserLoginSession userLoginSession;
     ListView allexp;
@@ -128,6 +129,7 @@ public class TwoFragment extends Fragment {
                 exp_location = new String[getData.length()];
                 exp_name = new String[getData.length()];
                 created_by = new String[getData.length()];
+                exp_state = new String[getData.length()];
 
                 for(int i=0; i < getData.length(); i++) {
                     JSONObject object = getData.getJSONObject(i);
@@ -150,9 +152,11 @@ public class TwoFragment extends Fragment {
                     exp_id[i]  = oob.getString("IdExpedition");
                     exp_name[i] = oob.getString("Name");
                     exp_location[i] = oob.getString("Place");
+                    exp_state[i] = oob.getString("State");
+
                 }
 
-                JoinedExpeditionAdapter adapter = new JoinedExpeditionAdapter(getActivity() , exp_id, exp_location, exp_name,created_by);
+                JoinedExpeditionAdapter adapter = new JoinedExpeditionAdapter(getActivity() , exp_id, exp_location, exp_name,created_by,exp_state);
                 allexp.setAdapter(adapter);
             } catch (JSONException e1) {
                 e1.printStackTrace();

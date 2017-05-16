@@ -15,6 +15,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.kit.backpackers.project_kit.R;
 import com.kit.backpackers.project_kit.Utils.ExpeditionSession;
 import com.kit.backpackers.project_kit.Utils.HttpRequests;
+import com.kit.backpackers.project_kit.Utils.MapsActivity;
 
 import org.json.JSONObject;
 
@@ -38,7 +39,7 @@ public class JoinedExpDetailActivity extends AppCompatActivity {
         go_event = (Button) findViewById(R.id.event_btnA);
         exploc = (TextView) findViewById(R.id.textLocationA);
         expdes = (TextView) findViewById(R.id.textDescA);
-
+        expeditionSession = new ExpeditionSession(this);
         Intent a = getIntent();
         expid = a.getStringExtra("expid");
          go_event.setEnabled(false);
@@ -114,12 +115,14 @@ public class JoinedExpDetailActivity extends AppCompatActivity {
                     go_event.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Toast.makeText(JoinedExpDetailActivity.this, "Click how gya....", Toast.LENGTH_LONG).show();
+                            //Toast.makeText(JoinedExpDetailActivity.this, "Click how gya....", Toast.LENGTH_LONG).show();
+                            expeditionSession.createExpSession(expid);
+                            startActivity(new Intent(JoinedExpDetailActivity.this, MapsActivity.class));
                         }
                     });
 
                 }else{
-                    Toast.makeText(JoinedExpDetailActivity.this, "Galaat haa", Toast.LENGTH_LONG).show();
+                    Toast.makeText(JoinedExpDetailActivity.this, "Trip not started Yet", Toast.LENGTH_LONG).show();
                 }
 
 

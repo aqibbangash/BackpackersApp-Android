@@ -21,8 +21,8 @@ public class HttpRequests {
         OkHttpClient client = new OkHttpClient();
 
         MediaType mediaType = MediaType.parse("application/json");
-       // RequestBody body = RequestBody.create(mediaType, "{\n\t\"Email\" : \""+useremail+"\",\n\t\"Password\" : \""+userpassword+"\"\n}");
-        RequestBody body = RequestBody.create(mediaType, "{\n\t\"Email\" : \"hahmed412@gmail.com\",\n\t\"Password\" : \"Qwerty12!@\"\n}");
+        RequestBody body = RequestBody.create(mediaType, "{\n\t\"Email\" : \""+useremail+"\",\n\t\"Password\" : \""+userpassword+"\"\n}");
+       // RequestBody body = RequestBody.create(mediaType, "{\n\t\"Email\" : \"hahmed412@gmail.com\",\n\t\"Password\" : \"Qwerty12!@\"\n}");
         Request request = new Request.Builder()
                 .url("https://backpackersapp.azurewebsites.net/api/Users/Login")
                 .post(body)
@@ -104,7 +104,7 @@ public class HttpRequests {
         OkHttpClient client = new OkHttpClient();
 
         Request request = new Request.Builder()
-                .url("https://backpackersapp.azurewebsites.net/api/Users/Events/"+useid)
+                .url("https://backpackersapp.azurewebsites.net/api/Users/Events/" + useid)
                 .get()
                 .addHeader("cache-control", "no-cache")
                 .addHeader("postman-token", "3a4a8292-29db-8f35-3b36-31ca447cb534")
@@ -113,4 +113,6 @@ public class HttpRequests {
         Response response = client.newCall(request).execute();
         return response.body().string();
     }
+
+
 }

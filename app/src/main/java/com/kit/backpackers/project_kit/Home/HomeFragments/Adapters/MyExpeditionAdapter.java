@@ -22,11 +22,22 @@ import com.kit.backpackers.project_kit.R;
 
 public class MyExpeditionAdapter extends ArrayAdapter<String> {
 
-    private final Activity context;
+    Activity context = null;
     String[] exp_id;
     String[] exp_location;
     String[] exp_name;
+    String[] exp_state;
 
+    public MyExpeditionAdapter(Activity context, String[] exp_id, String[] exp_location, String[] exp_name, String[] exp_state) {
+        super(context, R.layout.my_expediition_ly, exp_id);
+        this.context = context;
+        this.exp_id = exp_id;
+        this.exp_location = exp_location;
+        this.exp_name = exp_name;
+        this.exp_state = exp_state;
+
+
+    }
 
     public MyExpeditionAdapter(Activity context, String[] exp_id, String[] exp_location, String[] exp_name) {
         super(context, R.layout.my_expediition_ly, exp_id);
@@ -34,6 +45,7 @@ public class MyExpeditionAdapter extends ArrayAdapter<String> {
         this.exp_id = exp_id;
         this.exp_location = exp_location;
         this.exp_name = exp_name;
+//        this.exp_state = exp_state;
 
 
     }
@@ -61,19 +73,30 @@ public class MyExpeditionAdapter extends ArrayAdapter<String> {
         {
             viewHolder = (LoadViews) convertView.getTag();
         }
-        viewHolder.expName.setText(exp_name[position]);
-        viewHolder.expLoc.setText(exp_location[position]);
 
 
-        viewHolder.btn_exp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-               // Toast.makeText(context , exp_id[position] , Toast.LENGTH_LONG).show();
-                Intent intent=new Intent(context, MyExpFragmentActivity.class);
-                intent.putExtra("expid" , exp_id[position]);
-                context.startActivity(intent);
-            }
-        });
+
+        //check goes here......we will check if state == 2 to we not show any data.....else we show the data
+
+        if(exp_state[position].equalsIgnoreCase("2")){
+
+        }else{
+            viewHolder.expName.setText(exp_name[position]);
+            viewHolder.expLoc.setText(exp_location[position]);
+
+
+            viewHolder.btn_exp.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // Toast.makeText(context , exp_id[position] , Toast.LENGTH_LONG).show();
+                    Intent intent=new Intent(context, MyExpFragmentActivity.class);
+                    intent.putExtra("expid" , exp_id[position]);
+
+                    context.startActivity(intent);
+                }
+            });
+        }
+
 
         return  convertView;
     }

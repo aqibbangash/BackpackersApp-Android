@@ -70,7 +70,11 @@
 
         <service
             android:name=".Utils.UIService"
-            android:exported="false"></service>
+            android:exported="false" />
+        <service
+            android:name=".Utils.NotificationService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

@@ -24,15 +24,17 @@ public class JoinedExpeditionAdapter extends ArrayAdapter<String> {
     String[] exp_location;
     String[] exp_name;
     String[] created_by;
+    String[] exp_state;
 
 
-    public JoinedExpeditionAdapter(Activity context, String[] exp_id, String[] exp_location, String[] exp_name, String[] created_by) {
+    public JoinedExpeditionAdapter(Activity context, String[] exp_id, String[] exp_location, String[] exp_name, String[] created_by,String[] exp_state) {
         super(context, R.layout.join_expedition, exp_id);
         this.context = context;
         this.exp_id = exp_id;
         this.exp_location = exp_location;
         this.exp_name = exp_name;
         this.created_by=created_by;
+        this.exp_state=exp_state;
 
 
     }
@@ -61,19 +63,24 @@ public class JoinedExpeditionAdapter extends ArrayAdapter<String> {
         {
             viewHolder = (LoadViews) convertView.getTag();
         }
-        viewHolder.expName.setText(exp_name[position]);
-        viewHolder.expLoc.setText(exp_location[position]);
-        viewHolder.creator.setText(created_by[position]);
+
+        if(exp_state[position].equalsIgnoreCase("2")){
+
+        }else {
+            viewHolder.expName.setText(exp_name[position]);
+            viewHolder.expLoc.setText(exp_location[position]);
+            viewHolder.creator.setText(created_by[position]);
 
 
-        viewHolder.btn_exp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(context, JoinedExpDetailActivity.class);
-                intent.putExtra("expid" , exp_id[position]);
-                context.startActivity(intent);
-            }
-        });
+            viewHolder.btn_exp.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, JoinedExpDetailActivity.class);
+                    intent.putExtra("expid", exp_id[position]);
+                    context.startActivity(intent);
+                }
+            });
+        }
 
         return  convertView;
     }

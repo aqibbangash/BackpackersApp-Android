@@ -87,9 +87,10 @@ public class LocationUpdateService extends Service implements
     public static boolean isEnded = false;
     private ArrayList<LocationVo> mLocationData;
 
-    String userid;
-    String username;
 
+    String username;
+    String userid,expid;
+    ExpeditionSession expeditionSession;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -97,6 +98,9 @@ public class LocationUpdateService extends Service implements
         HashMap<String, String> details = loginSession.getUserDetails();
         userid = details.get(UserLoginSession.userid);
         username = details.get(UserLoginSession.username);
+        expeditionSession = new ExpeditionSession(this);
+        HashMap <String,String> getexpid=expeditionSession.getExpDetails();
+        expid=getexpid.get(ExpeditionSession.expeditionid);
 
         // Kick off the process of building a GoogleApiClient and requesting the LocationServices
         // API.
@@ -194,7 +198,7 @@ public class LocationUpdateService extends Service implements
             OkHttpClient client = new OkHttpClient();
 
             MediaType mediaType = MediaType.parse("application/json");
-            RequestBody body = RequestBody.create(mediaType, "{\n    \"BackpackerId\": \""+userid+"\",\n    \"ExpeditionId\": \"5\",\n    \"Name\": \""+username+"\",\n    \"Lat\": \""+mCurrentLocation.getLatitude()+"\",\n    \"Lng\": \""+ mCurrentLocation.getLongitude()+"\"\n  }");
+            RequestBody body = RequestBody.create(mediaType, "{\n    \"BackpackerId\": \"" + userid + "\",\n    \"ExpeditionId\": \"" + expid + "\",\n    \"Name\": \"" + username + "\",\n    \"Lat\": \"" + mCurrentLocation.getLatitude() + "\",\n    \"Lng\": \"" + mCurrentLocation.getLongitude() + "\"\n  }");
             Request request = new Request.Builder()
                     .url("https://backpackersapp.azurewebsites.net/api/Tracks")
                     .post(body)

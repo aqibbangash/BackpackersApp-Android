@@ -30,6 +30,7 @@ public class OneFragment extends Fragment {
     String[] exp_id;
     String[] exp_location;
     String[] exp_name;
+    String[] exp_state;
 
     String userid;
     UserLoginSession userLoginSession;
@@ -133,6 +134,8 @@ public class OneFragment extends Fragment {
                     exp_id = new String[getData.length()];
                     exp_location = new String[getData.length()];
                     exp_name = new String[getData.length()];
+                  // okaieeee :D  exp_name = new String[getData.length()];  //y you no use shortcuts  -_- cebause u wnt me to rewrite the codes
+                    exp_state=new String[getData.length()];
 
                     if (getData.length() > 0) {
                         for (int i = 0; i < getData.length(); i++) {
@@ -140,10 +143,11 @@ public class OneFragment extends Fragment {
                             exp_id[i] = c.getString("IdExpedition");
                             exp_name[i] = c.getString("Name");
                             exp_location[i] = c.getString("Place");
+                            exp_state[i] = c.getString("State"); //happy? haha yess  :D
 
                         }
                         //passing data to My Expedition Adpater to show the data on list view
-                        MyExpeditionAdapter adapter = new MyExpeditionAdapter(getActivity() , exp_id, exp_location, exp_name);
+                        MyExpeditionAdapter adapter = new MyExpeditionAdapter(getActivity() , exp_id, exp_location, exp_name,exp_state);
                         myallCols.setAdapter(adapter);
 
                     }

@@ -18,7 +18,7 @@ public class UIService extends IntentService {
     public static final String NOTIFICATION = "";
     private int result = Activity.RESULT_CANCELED;
     public static final String RESULT = "result";
-    String userid;
+    String userid,expid;
     double value_a;
     double value_b;
     int e = 0;
@@ -37,14 +37,14 @@ public class UIService extends IntentService {
         if (extras != null) {
             try {
 
-                userid = extras.getString("driver_id");
-                id = userid;
-                System.out.println("the driver id outside is " + id);
+                expid = extras.getString("expid");
+
+                System.out.println("the driver id outside is " + expid);
 
                 OkHttpClient client = new OkHttpClient();
 
                 Request request = new Request.Builder()
-                        .url("https://backpackersapp.azurewebsites.net/api/Tracks/"+userid)
+                        .url("https://backpackersapp.azurewebsites.net/api/Tracks/"+expid)
                         .get()
                         .addHeader("cache-control", "no-cache")
                         .addHeader("postman-token", "5a027277-3670-b49d-c863-ed605799230c")

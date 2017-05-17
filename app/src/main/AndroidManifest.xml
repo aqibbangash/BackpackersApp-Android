@@ -61,12 +61,17 @@
             android:name=".Utils.MapsActivity"
             android:label="@string/title_activity_maps" />
 
+        <activity
+            android:name=".Utils.MapsActivity"
+            android:label="@string/title_activity_maps" />
+
         <service
             android:name=".Utils.LocationUpdateService"
             android:enabled="true"
             android:exported="true" />
 
         <activity android:name=".Home.HomeFragments.Myexpfragments.JoinedExpDetailActivity" />
+        <activity android:name=".Home.HomeFragments.Myexpfragments.JoinedExpDetailActivityNew" />
 
         <service
             android:name=".Utils.UIService"

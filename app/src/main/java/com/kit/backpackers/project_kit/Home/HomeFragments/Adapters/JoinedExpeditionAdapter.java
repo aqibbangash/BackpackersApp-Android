@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kit.backpackers.project_kit.Home.HomeFragments.Myexpfragments.JoinedExpDetailActivity;
+import com.kit.backpackers.project_kit.Home.HomeFragments.Myexpfragments.JoinedExpDetailActivityNew;
 import com.kit.backpackers.project_kit.Home.HomeFragments.Myexpfragments.MyExpFragmentActivity;
 import com.kit.backpackers.project_kit.R;
 
@@ -75,7 +76,7 @@ public class JoinedExpeditionAdapter extends ArrayAdapter<String> {
             viewHolder.btn_exp.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(context, JoinedExpDetailActivity.class);
+                    Intent intent = new Intent(context, JoinedExpDetailActivityNew.class);
                     intent.putExtra("expid", exp_id[position]);
                     context.startActivity(intent);
                 }

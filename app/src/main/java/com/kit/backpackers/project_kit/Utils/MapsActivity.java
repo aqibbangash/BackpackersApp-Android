@@ -10,9 +10,11 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -23,6 +25,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -33,6 +36,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import com.kit.backpackers.project_kit.Home.HomeActivity;
 import com.kit.backpackers.project_kit.Home.HomeFragments.Adapters.JoinedExpeditionAdapter;
+import com.kit.backpackers.project_kit.Home.HomeFragments.FragmentActivity;
 import com.kit.backpackers.project_kit.R;
 
 import org.json.JSONArray;
@@ -40,6 +44,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.DoubleSummaryStatistics;
 import java.util.HashMap;
 import java.util.Timer;
@@ -47,11 +53,14 @@ import java.util.TimerTask;
 
 import javax.net.ssl.SSLEngineResult;
 
-public class MapsActivity extends AppCompatActivity implements
+import io.nlopez.smartlocation.OnLocationUpdatedListener;
+import io.nlopez.smartlocation.SmartLocation;
+
+public class MapsActivity extends FragmentActivity implements
         GoogleMap.OnMyLocationButtonClickListener,
         OnMapReadyCallback,
         ActivityCompat.OnRequestPermissionsResultCallback,
-        GoogleMap.OnMapLongClickListener{
+        GoogleMap.OnMapLongClickListener, LocationListener {
 
     String[] active_id;
     String[] backpacker_id;
@@ -59,6 +68,21 @@ public class MapsActivity extends AppCompatActivity implements
     String[] expidd;
     String[] username;
 
+
+    GPSTracker gps;
+
+    Handler handler = new Handler();
+
+    Location location;
+
+    LocationManager mLocationManager;
+
+    LocationRequest mLocationRequest;
+    Location mCurrentLocation;
+    String mLastUpdateTime;
+
+    private static final long INTERVAL = 1000 * 10;
+    private static final long FASTEST_INTERVAL = 1000 * 5;
 
     /**
      * Request code for location permission request.
@@ -80,6 +104,13 @@ public class MapsActivity extends AppCompatActivity implements
     String userid,expid;
     ExpeditionSession expeditionSession;
 
+
+    protected void createLocationRequest() {
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(INTERVAL);
+        mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,33 +188,117 @@ public class MapsActivity extends AppCompatActivity implements
     public void onMapReady(GoogleMap map) {
         mMap = map;
 
-        mMap.setOnMyLocationButtonClickListener(this);
-        mMap.setOnMapLongClickListener(this);
+        try {
+            mMap.setMyLocationEnabled(true);
 
-        enableMyLocation();
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
+
+            mMap.setOnMyLocationButtonClickListener(this);
+            mMap.setOnMapLongClickListener(this);
+
+            enableMyLocation();
+
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
+
+
+            mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+            final LocationListener mLocationListener = new LocationListener() {
+                @Override
+                public void onLocationChanged(final Location location) {
+                    //your code here
+
+                    Log.e("Location", "Changed");
+
+
+                    if (location != null) {
+                        double latitude = location.getLatitude();
+                        double longitude = location.getLongitude();
+                        LatLng latLng = new LatLng(latitude, longitude);
+                        float zoomLevel = 16; //This goes up to 21
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel));
+                    }
+
+                }
+
+                @Override
+                public void onStatusChanged(String provider, int status, Bundle extras) {
+
+                }
+
+                @Override
+                public void onProviderEnabled(String provider) {
+
+                }
+
+                @Override
+                public void onProviderDisabled(String provider) {
+
+                }
+            };
+
+            mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000,
+                    10, mLocationListener);
+
+
+            location = mMap.getMyLocation();
+
+
+            gps = new GPSTracker(getApplicationContext());
+
+            if (gps.canGetLocation()) {
+
+                double latitude = gps.getLatitude();
+                double longitude = gps.getLongitude();
+
+
+                //TODO update these values
+                String IdExpedition = "";
+                String State = "";
+                try {
+                    HttpRequests.UpdateExpedition(IdExpedition, State);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+                // \n is for new line
+                Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+
+                LatLng latLng = new LatLng(latitude, longitude);
+                float zoomLevel = 16; //This goes up to 21
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel));
+
+                startLocationChangedListener();
+
+
+            } else {
+                // can't get location
+                // GPS or Network is not enabled
+                // Ask user to enable GPS/network in settings
+                gps.showSettingsAlert();
+            }
+
+
+//            if (location != null) {
+//                double latitude = location.getLatitude();
+//                double longitude = location.getLongitude();
+//                LatLng latLng = new LatLng(latitude, longitude);
+//                float zoomLevel = 16; //This goes up to 21
+//                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel));
+//            }
+//            else {
+//                Toast.makeText(getApplicationContext() , "Location Not Found " , Toast.LENGTH_LONG).show();
+//            }
+
+
+        } catch (SecurityException se) {
+            Toast.makeText(getApplication(), "Allow Location Access first", Toast.LENGTH_SHORT).show();
+            mPermissionDenied = true;
         }
 
 
-        //setting up map to current location
-        LocationManager locationManager = (LocationManager)
-                getSystemService(Context.LOCATION_SERVICE);
-        Criteria criteria = new Criteria();
-
-        Location location = locationManager.getLastKnownLocation(locationManager
-                .getBestProvider(criteria, false));
-
-        if (location != null) {
-            double latitude = location.getLatitude();
-            double longitude = location.getLongitude();
-            LatLng latLng = new LatLng(latitude, longitude);
-            float zoomLevel = 16; //This goes up to 21
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel));
-        }
-        else {
-            Toast.makeText(getApplicationContext() , "Location Not Found " , Toast.LENGTH_LONG).show();
-        }
     }
 
 
@@ -283,10 +398,10 @@ public class MapsActivity extends AppCompatActivity implements
                                 latitiude[i] = jsonObject.getString("Lat");
                                 longitude[i] = jsonObject.getString("Lng");
 
-                                MarkerOptions markerOptions = new MarkerOptions();
-                                markerOptions.position(new LatLng(Double.parseDouble(latitiude[i]), Double.parseDouble(longitude[i])));
-                                //here?
-                                mMap.addMarker(markerOptions);
+//                                MarkerOptions markerOptions = new MarkerOptions();
+//                                markerOptions.position(new LatLng(Double.parseDouble(latitiude[i]), Double.parseDouble(longitude[i])));
+//                                //here?
+//                                mMap.addMarker(markerOptions);
                             }
 
 
@@ -303,10 +418,32 @@ public class MapsActivity extends AppCompatActivity implements
 
     };//end of broadcast receiver
 
+    @Override
+    public void onLocationChanged(Location location) {
+
+        mCurrentLocation = location;
+        mLastUpdateTime = DateFormat.getTimeInstance().format(new Date());
+
+        Log.e("Location Upate: ", mLastUpdateTime);
+        Log.e("Location : ", Double.toString(mCurrentLocation.getLatitude()) + ", " + Double.toString(mCurrentLocation.getLongitude()));
 
 
+    }
 
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
 
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
 
 
     //async class to update the state of the exp
@@ -351,6 +488,103 @@ public class MapsActivity extends AppCompatActivity implements
         }
     }
 
+
+    void startLocationChangedListener() {
+
+        SmartLocation.with(getApplicationContext()).location().start(locationListener);
+
+    }
+
+
+    OnLocationUpdatedListener locationListener = new OnLocationUpdatedListener() {
+        @Override
+        public void onLocationUpdated(Location location) {
+
+            double latitude = location.getLatitude();
+            double longitude = location.getLongitude();
+
+            //Toast.makeText(getApplicationContext(), "New Location!", Toast.LENGTH_SHORT).show();
+
+            LatLng latLng = new LatLng(latitude, longitude);
+            float zoomLevel = 16; //This goes up to 21
+            if (mMap != null) {
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel));
+
+                updateLocationOnServer(latitude, longitude);
+            }
+
+
+            handler.postDelayed(locationRunnable, 10000);
+        }
+    };
+
+
+    Runnable locationRunnable = new Runnable() {
+        @Override
+        public void run() {
+
+            SmartLocation.with(getApplicationContext()).location().start(locationListener);
+
+        }
+    };
+
+
+    @Override
+    public void onStop() {
+        SmartLocation.with(getApplicationContext()).location().stop();
+        super.onStop();
+    }
+
+    void updateLocationOnServer(Double lat, Double lon) {
+
+        //TODO update these values
+        String BackpackerId = ""; //actual BackpackerId here
+        String ExpeditionId = ""; //actual ExpeditionId here
+        String Name = "";            //actual Name here
+        String Lat = lat.toString();  //actual Lat here
+        String Lon = lon.toString();  //actual Lon here
+
+        try {
+
+
+            HttpRequests.UpdateUserLocation(BackpackerId, ExpeditionId, Name, Lat, Lon);
+
+            //TODO update these values
+            String trackNumber = ""; //actual trackNumber here
+            getAndMapPins(trackNumber);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    void getAndMapPins(String trackId) {
+
+
+        try {
+
+            JSONArray allPins = HttpRequests.getAllPins(trackId);
+
+            mMap.clear();
+
+
+            for (int i = 0; i < allPins.length(); i++) {
+                JSONObject jj = allPins.getJSONObject(i);
+                MarkerOptions markerOptions = new MarkerOptions();
+                markerOptions.position(new LatLng(jj.getDouble("Lat"), jj.getDouble("Lng")));
+                markerOptions.title(jj.getString("Name"));
+                mMap.addMarker(markerOptions);
+            }
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
 
 
 }

@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.kit.backpackers.project_kit.Home.HomeFragments.Adapters.MyExpeditionAdapter;
 import com.kit.backpackers.project_kit.Models.Expedition;
 import com.kit.backpackers.project_kit.R;
@@ -98,10 +100,15 @@ public class myExpDetailFragment extends Fragment{
                     new UpdateMyExpedition().execute();
                 }
                 else{
+
+                    FirebaseMessaging.getInstance().subscribeToTopic("expid"+expid);
+                    Log.e("Subscribed to: ", "expid"+expid);
                     //WILL DIRECTLY GO THE MAPS
                      Intent getMpas = new Intent(getActivity(), MapsActivity.class);
                      getMpas.putExtra("expid" , expid);
                     startActivity(getMpas);
+
+
 
                     //myExpDetailFragment.this.finish();
                     getActivity().finish();

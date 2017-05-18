@@ -420,12 +420,6 @@ public class MapsActivity extends FragmentActivity implements
 
 
                         //clearing all persons markers
-                        for (Marker m: allPersons)
-                        {
-                            m.remove();
-                            allPersons.remove(m);
-                            Log.e("RemaingPersons", String.valueOf(allPersons.size()));
-                        }
 
 
 //                        try {
@@ -622,7 +616,7 @@ public class MapsActivity extends FragmentActivity implements
         try {
 
             Log.e("Pins", "Clean");
-            mMap.clear();
+
 
             getAllPins(trackId, mMap);
 
@@ -665,6 +659,32 @@ public class MapsActivity extends FragmentActivity implements
                 String res = response.body().string();
 
                 try {
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            mMap.clear();
+
+                        }
+                    });
+
+                    getOtherPins(Const.ExId);
+
+//                    for (final Marker m: allPersons)
+//                    {
+//                        runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                m.remove();
+//                            }
+//                        });
+//                        allPersons.remove(m);
+//                        Log.e("RemaingPersons", String.valueOf(allPersons.size()));
+//                    }
+
+
+
                     JSONArray allPins = new JSONArray(res);
 
 
@@ -697,6 +717,8 @@ public class MapsActivity extends FragmentActivity implements
 
 
                                     allPersons.add(mMap.addMarker(markerOptions));
+
+
 
                                 }
                             });

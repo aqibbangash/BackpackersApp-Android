@@ -17,13 +17,16 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.kit.backpackers.project_kit.Home.HomeActivity;
 import com.kit.backpackers.project_kit.R;
+import com.kit.backpackers.project_kit.Utils.Const;
 import com.kit.backpackers.project_kit.Utils.HttpRequests;
 import com.kit.backpackers.project_kit.Utils.UserLoginSession;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Iterator;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -134,7 +137,20 @@ public class MainActivity extends AppCompatActivity {
                 if(jsonObj.length() > 0) {
                     //for (int i = 0; i < getData.length(); i++) {
                        // JSONObject c = getData.getJSONObject(i);
+
+//                    Iterator<String> iter = jsonObj.keys();
+//                    while (iter.hasNext()) {
+//                        String key = iter.next();
+//                        try {
+//                            String kk  = (String) jsonObj.get(key);
+//                            Log.e("JSON KEY " + kk, jsonObj.getString(key) );
+//                        } catch (JSONException e) {
+//                            // Something went wrong!
+//                        }
+//                    }
+
                         String user_id = jsonObj.getString("BackpackerID");
+                        Const.BpId = user_id;
                         String username = jsonObj.getString("Name");
                         String email = jsonObj.getString("UserID");
 
@@ -144,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext() , "Login done"+username , Toast.LENGTH_LONG).show();
 
                     startActivity(new Intent(MainActivity.this, HomeActivity.class));
-                    finish();
+                    MainActivity.this.finish();
                 }else{
                     Toast.makeText(getApplicationContext(), "Your Login details are incorrect. Please try again", Toast.LENGTH_LONG).show();
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);

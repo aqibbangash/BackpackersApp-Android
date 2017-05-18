@@ -1,6 +1,8 @@
 package com.kit.backpackers.project_kit.Utils;
 
+import android.os.NetworkOnMainThreadException;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.kit.backpackers.project_kit.Models.ExpLocations;
 
@@ -10,6 +12,7 @@ import org.json.JSONException;
 import java.io.IOException;
 
 import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -125,7 +128,7 @@ public class HttpRequests {
         return response.body().string();
     }
 
-    public static String UpdateUserLocation(String BackpackerId, String ExpeditionId, String Name, String Lat, String Lon) throws IOException {
+    public static void UpdateUserLocation(String BackpackerId, String ExpeditionId, String Name, String Lat, String Lon) throws IOException {
 
         OkHttpClient client = new OkHttpClient();
 
@@ -134,11 +137,10 @@ public class HttpRequests {
         RequestBody requestBody = new FormBody.Builder()
                 .add("BackpackerId", BackpackerId)
                 .add("ExpeditionId", ExpeditionId)
-                .add("Name", ExpeditionId)
-                .add("Lat", ExpeditionId)
-                .add("Lng", ExpeditionId).build();
+                .add("Name", Name)
+                .add("Lat", Lat)
+                .add("Lng", Lon).build();
 
-        Log.e("Req", requestBody.toString());
 
         Request request = new Request.Builder().url(url)
                 .addHeader("content-type", "application/json")
@@ -147,20 +149,41 @@ public class HttpRequests {
                 .post(requestBody)
                 .build();
 
-        Response response = client.newCall(request).execute();
-        Log.e("Resp", response.body().string());
+        Call call = client.newCall(request);
 
-        return response.body().string();
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+
+                Log.e("**Resp", "Failed");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+                Log.e("*!*Resp", "Received");
+
+            }
+        });
+
+
+            //Response response = client.newCall(request).execute();
+        //Log.e("Resp", response.body().string());
+
+        //return response.body().string();
 
 
     }
 
 
-    public static String UpdateExpedition(String IdExpedition, String State) throws IOException {
+    public static void UpdateExpedition(String IdExpedition, String State) throws IOException, NetworkOnMainThreadException {
 
         OkHttpClient client = new OkHttpClient();
 
-        String url = "https://backpackersapp.azurewebsites.net/api/Users/Expeditions/State/" + State;
+        String url = "https://backpackersapp.azurewebsites.net/api/Users/Expeditions/State/" + IdExpedition;
+
+        Log.e("**URL", url);
 
         RequestBody requestBody = new FormBody.Builder()
                 .add("IdExpedition", IdExpedition)
@@ -173,13 +196,32 @@ public class HttpRequests {
                 .addHeader("content-type", "application/json")
                 .addHeader("cache-control", "no-cache")
                 .addHeader("postman-token", "f848a2cb-0a86-8a8d-8897-81852c81bf1a")
-                .post(requestBody)
+                .put(requestBody)
                 .build();
 
-        Response response = client.newCall(request).execute();
-        Log.e("Resp", response.body().string());
 
-        return response.body().string();
+        Call call = client.newCall(request);
+
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+
+                Log.e("*Resp", "Failed");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+                Log.e("*Resp", "Received");
+
+            }
+
+        });
+        //Response response = client.newCall(request).execute();
+        //Log.e("Resp", response.body().string());
+
+        //return response.body().string();
 
 
     }

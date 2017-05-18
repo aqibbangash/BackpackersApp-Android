@@ -24,6 +24,11 @@ public class Const {
     public static final String DATABASE_PATH = "/data/data/com.google.android.gms.location.sample.locationupdates/databases/"; //Change it
     public static final int DATABASE_VERSION = 1;
 
+    public static String BpId = "";
+    public static String ExId = "";
+    public static String Name = "";
+
+
     /**
      * Method to get address from latitude and longitude.
      *

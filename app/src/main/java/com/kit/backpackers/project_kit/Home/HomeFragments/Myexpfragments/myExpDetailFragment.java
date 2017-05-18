@@ -51,6 +51,9 @@ public class myExpDetailFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
+
         View layoutView = inflater.inflate(R.layout.my_exp_detail_fragment,
                 container, false);
 
@@ -99,6 +102,10 @@ public class myExpDetailFragment extends Fragment{
                      Intent getMpas = new Intent(getActivity(), MapsActivity.class);
                      getMpas.putExtra("expid" , expid);
                     startActivity(getMpas);
+
+                    //myExpDetailFragment.this.finish();
+                    getActivity().finish();
+
                 }
 
 

@@ -117,7 +117,10 @@ public class JoinedExpDetailActivity extends AppCompatActivity {
                         public void onClick(View v) {
                             //Toast.makeText(JoinedExpDetailActivity.this, "Click how gya....", Toast.LENGTH_LONG).show();
                             expeditionSession.createExpSession(expid);
+
                             startActivity(new Intent(JoinedExpDetailActivity.this, MapsActivity.class));
+
+                            JoinedExpDetailActivity.this.finish();
                         }
                     });
 

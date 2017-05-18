@@ -2,6 +2,7 @@ package com.kit.backpackers.project_kit.Utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import java.util.HashMap;
 
@@ -33,6 +34,8 @@ public class ExpeditionSession {
     public void createExpSession(String _id){
         editor.putBoolean(IS_LOGIN, true);
         editor.putString(expeditionid, _id);
+        Const.ExId = _id;
+        Log.e("ExpId: ", Const.ExId);
 
 
         editor.commit();

@@ -6,12 +6,14 @@ import android.content.SharedPreferences;
 import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.kit.backpackers.project_kit.Home.HomeFragments.FragmentActivity;
@@ -29,12 +31,15 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     TextView displayName;
     ImageView displayImage;
 
+    RelativeLayout gp, exp, track, logout;
 
     private Button btnGroups;
     private Button btnExpedition;
     private Button btnTrack;
     private Button btnlogout;
     ImageView lg_button;
+
+    private Toolbar toolbar;
 
     /**
      * Find the Views in the layout<br />
@@ -46,30 +51,63 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         btnGroups = (Button)findViewById( R.id.btn_groups );
         btnExpedition = (Button)findViewById( R.id.btn_expedition );
         btnTrack = (Button)findViewById( R.id.btn_track );
-        lg_button = (ImageView) findViewById( R.id.lg_button );
 
-        btnGroups.setOnClickListener(this);
-        btnExpedition.setOnClickListener( this );
-        btnTrack.setOnClickListener( this );
-        lg_button.setOnClickListener( this );
+
+        gp = (RelativeLayout) findViewById(R.id.rl_groups);
+        exp = (RelativeLayout) findViewById(R.id.rl_exp);
+        track = (RelativeLayout) findViewById(R.id.rl_track);
+        logout = (RelativeLayout) findViewById(R.id.rl_logout);
+
+
+        gp.setOnClickListener(this);
+        exp.setOnClickListener( this );
+        track.setOnClickListener( this );
+        logout.setOnClickListener( this );
     }
 
 
     @Override
     public void onClick(View v) {
-        if ( v == btnGroups ) {
-            startActivity(new Intent(HomeActivity.this, FragmentActivity.class));
 
-        } else if ( v == btnExpedition ) {
-            // Handle clicks for btnExpedition
-        } else if ( v == btnTrack ) {
-            // Handle clicks for btnTrack
+        switch (v.getId())
+        {
+
+            case R.id.rl_groups:
+                startActivity(new Intent(HomeActivity.this, FragmentActivity.class));
+                break;
+            case R.id.rl_exp:
+                startActivity(new Intent(HomeActivity.this, ExpeditionActivity.class));
+                break;
+            case R.id.rl_track:
+                break;
+            case R.id.rl_logout:
+                userLoginSession.logoutUser();
+                startActivity(new Intent(HomeActivity.this, MainActivity.class));
+                break;
+//            case R.id.lg_button:
+//                userLoginSession.logoutUser();
+//                startActivity(new Intent(HomeActivity.this, MainActivity.class));
+//                break;
+
+            default:
+
+
+
         }
-        else if ( v == lg_button ) {
-            // Handle clicks for btnTrack
-            userLoginSession.logoutUser();
-            startActivity(new Intent(HomeActivity.this, MainActivity.class));
-        }
+
+//        if ( v == btnGroups ) {
+//            startActivity(new Intent(HomeActivity.this, FragmentActivity.class));
+//
+//        } else if ( v == btnExpedition ) {
+//            // Handle clicks for btnExpedition
+//        } else if ( v == btnTrack ) {
+//            // Handle clicks for btnTrack
+//        }
+//        else if ( v == lg_button ) {
+//            // Handle clicks for btnTrack
+//            userLoginSession.logoutUser();
+//            startActivity(new Intent(HomeActivity.this, MainActivity.class));
+//        }
     }
 
 
@@ -77,6 +115,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
+
+//        toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
         displayName =(TextView)findViewById(R.id.name_display_user);
         displayImage=(ImageView)findViewById(R.id.img_user);
 

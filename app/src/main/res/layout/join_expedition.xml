@@ -1,48 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:paddingLeft="30dp"
+    android:paddingRight="10dp">
 
 
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/exp_name"
-        android:layout_marginLeft="42dp"
-        android:layout_marginStart="42dp"
-        android:layout_marginTop="56dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/exp_location"
-        android:layout_marginTop="8dp"
-        android:layout_below="@+id/exp_name"
-        android:layout_alignLeft="@+id/exp_name"
-        android:layout_alignStart="@+id/exp_name" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/exp_creator"
-        android:layout_below="@+id/exp_location"
-        android:layout_alignLeft="@+id/exp_location"
-        android:layout_alignStart="@+id/exp_location"
-        android:layout_marginTop="8dp" />
 
     <Button
+        android:gravity="center"
+        android:layout_centerVertical="true"
+        android:text="EXPLORE"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Explore"
-        android:id="@+id/explore_button"
-        android:layout_alignTop="@+id/exp_location"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="44dp"
-        android:layout_marginEnd="44dp" />
+        android:background="@color/colorPrimary"
+        android:textStyle="bold"
+        android:textColor="#FFF"
+        android:padding="10dp"
+        android:textSize="10dp"
+        android:id="@+id/exploreExp"
+        android:layout_alignParentRight="true" />
+
+
+
+    <TextView
+        android:layout_toLeftOf="@id/exploreExp"
+        android:textStyle="bold"
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:fontFamily="serif"
+        android:textSize="15dp"
+        android:id="@+id/exp_name" />
+
+    <TextView
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@id/exploreExp"
+        android:layout_marginTop="5dp"
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif"
+        android:layout_below="@+id/exp_name"
+        android:textSize="10dp"
+        android:id="@+id/exp_location" />
+
+    <TextView
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@id/exploreExp"
+        android:layout_marginTop="5dp"
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif"
+        android:layout_below="@+id/exp_location"
+        android:textSize="10dp"
+        android:id="@+id/exp_creator" />
+
+
+
+
+
+
 
 </RelativeLayout>

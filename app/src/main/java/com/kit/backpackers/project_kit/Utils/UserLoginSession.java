@@ -2,6 +2,7 @@ package com.kit.backpackers.project_kit.Utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import java.util.HashMap;
 
@@ -45,6 +46,11 @@ public class UserLoginSession {
         user.put(userid, pref.getString(userid, null));
         user.put(username, pref.getString(username, null));
         user.put(picture, pref.getString(picture, null));
+
+        Log.e("******", "Saved");
+        Const.BpId = pref.getString(userid, "");
+        Const.Name = pref.getString(username, "");
+
         // return user
         return user;
     }

@@ -7,7 +7,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -30,6 +33,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -45,6 +49,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.DoubleSummaryStatistics;
 import java.util.HashMap;
@@ -55,6 +60,11 @@ import javax.net.ssl.SSLEngineResult;
 
 import io.nlopez.smartlocation.OnLocationUpdatedListener;
 import io.nlopez.smartlocation.SmartLocation;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class MapsActivity extends FragmentActivity implements
         GoogleMap.OnMyLocationButtonClickListener,
@@ -68,6 +78,9 @@ public class MapsActivity extends FragmentActivity implements
     String[] expidd;
     String[] username;
 
+    ArrayList<Marker> allPersons = new ArrayList<>();
+
+    String currentExpId;
 
     GPSTracker gps;
 
@@ -105,13 +118,6 @@ public class MapsActivity extends FragmentActivity implements
     ExpeditionSession expeditionSession;
 
 
-    protected void createLocationRequest() {
-        mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(INTERVAL);
-        mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,14 +140,33 @@ public class MapsActivity extends FragmentActivity implements
         HashMap <String,String> getexpid=expeditionSession.getExpDetails();
         expid=getexpid.get(ExpeditionSession.expeditionid);
 
+        currentExpId = getIntent().getStringExtra("expid");
+        try {
+            Log.e("CurrentExp", currentExpId);
+            Const.ExId = currentExpId;
+        } catch (NullPointerException ne)
+        {
+            Log.e("Null", "Exception");
+        }
 
-        startService(new Intent(MapsActivity.this, LocationUpdateService.class));
+        //startService(new Intent(MapsActivity.this, LocationUpdateService.class));
 
         stop_track.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                new UpdateMyExpedition().execute(); //just call the class bs....rgihty
+                //TODO update these values
+                String IdExpedition = Const.ExId; //currentExpId;
+                String State = "2";
+                try {
+                    Log.e("End Exp", "TRY BRACKET");
+                    HttpRequests.UpdateExpedition(IdExpedition, State);
+                    MapsActivity.this.finish();
+                } catch (IOException e) {
+                    Log.e("End Exp", "ERROR");
+                    e.printStackTrace();
+                }
+                //new UpdateMyExpedition().execute(); //just call the class bs....rgihty
             }
         });
 
@@ -163,8 +188,8 @@ public class MapsActivity extends FragmentActivity implements
                 }
             };
 
-            timer = new Timer();
-            timer.schedule(timerTask, 5000, 7000);
+            //timer = new Timer();
+            //timer.schedule(timerTask, 5000, 7000);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -217,7 +242,7 @@ public class MapsActivity extends FragmentActivity implements
                         double longitude = location.getLongitude();
                         LatLng latLng = new LatLng(latitude, longitude);
                         float zoomLevel = 16; //This goes up to 21
-                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel));
+                        //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel));
                     }
 
                 }
@@ -254,8 +279,8 @@ public class MapsActivity extends FragmentActivity implements
 
 
                 //TODO update these values
-                String IdExpedition = "";
-                String State = "";
+                String IdExpedition = Const.ExId; //currentExpId;
+                String State = "1";
                 try {
                     HttpRequests.UpdateExpedition(IdExpedition, State);
                 } catch (IOException e) {
@@ -265,6 +290,14 @@ public class MapsActivity extends FragmentActivity implements
 
                 // \n is for new line
                 Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+
+                try {
+                    getOtherPins(Const.ExId);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
                 LatLng latLng = new LatLng(latitude, longitude);
                 float zoomLevel = 16; //This goes up to 21
@@ -382,7 +415,27 @@ public class MapsActivity extends FragmentActivity implements
                     String locationResult = bundle.getString("userlocations");
                   //  Toast.makeText(getApplicationContext(), locationResult , Toast.LENGTH_LONG).show();
                     try {
-                        mMap.clear();
+                        //mMap.clear();
+
+
+
+                        //clearing all persons markers
+                        for (Marker m: allPersons)
+                        {
+                            m.remove();
+                            allPersons.remove(m);
+                            Log.e("RemaingPersons", String.valueOf(allPersons.size()));
+                        }
+
+
+//                        try {
+//                            getOtherPins(Const.ExId);
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+
                         JSONArray jsonArray=new JSONArray(locationResult);
 
                        // if(jsonArray.length() > 0 ) {
@@ -508,13 +561,13 @@ public class MapsActivity extends FragmentActivity implements
             LatLng latLng = new LatLng(latitude, longitude);
             float zoomLevel = 16; //This goes up to 21
             if (mMap != null) {
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel));
+                //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel));
 
                 updateLocationOnServer(latitude, longitude);
             }
 
 
-            handler.postDelayed(locationRunnable, 10000);
+            handler.postDelayed(locationRunnable, 20000);
         }
     };
 
@@ -523,6 +576,7 @@ public class MapsActivity extends FragmentActivity implements
         @Override
         public void run() {
 
+            Log.e("Updating Your Loc:", "SmartLocation");
             SmartLocation.with(getApplicationContext()).location().start(locationListener);
 
         }
@@ -537,24 +591,27 @@ public class MapsActivity extends FragmentActivity implements
 
     void updateLocationOnServer(Double lat, Double lon) {
 
+
         //TODO update these values
-        String BackpackerId = ""; //actual BackpackerId here
-        String ExpeditionId = ""; //actual ExpeditionId here
-        String Name = "";            //actual Name here
+        String BackpackerId = Const.BpId; //""; //actual BackpackerId here
+        String ExpeditionId = Const.ExId; //actual ExpeditionId here
+        String Name = Const.Name;            //actual Name here
         String Lat = lat.toString();  //actual Lat here
         String Lon = lon.toString();  //actual Lon here
 
         try {
 
-
             HttpRequests.UpdateUserLocation(BackpackerId, ExpeditionId, Name, Lat, Lon);
 
             //TODO update these values
-            String trackNumber = ""; //actual trackNumber here
+            String trackNumber = ExpeditionId; //""; //actual trackNumber here
+
             getAndMapPins(trackNumber);
 
-        } catch (IOException e) {
+        } catch (IOException e)
+        {
             e.printStackTrace();
+            Log.e("UpdateLoc", "ERROR");
         }
 
     }
@@ -564,25 +621,183 @@ public class MapsActivity extends FragmentActivity implements
 
         try {
 
-            JSONArray allPins = HttpRequests.getAllPins(trackId);
-
+            Log.e("Pins", "Clean");
             mMap.clear();
 
+            getAllPins(trackId, mMap);
 
-            for (int i = 0; i < allPins.length(); i++) {
-                JSONObject jj = allPins.getJSONObject(i);
-                MarkerOptions markerOptions = new MarkerOptions();
-                markerOptions.position(new LatLng(jj.getDouble("Lat"), jj.getDouble("Lng")));
-                markerOptions.title(jj.getString("Name"));
-                mMap.addMarker(markerOptions);
-            }
+
 
 
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
+
+    }
+
+    public void getAllPins(String track, final GoogleMap mMap) throws IOException {
+
+        OkHttpClient client = new OkHttpClient();
+
+        String url = "https://backpackersapp.azurewebsites.net/api/Tracks/" + track;
+        Log.e("GET ALL PINS", url);
+
+        Request request = new Request.Builder().url(url)
+                .addHeader("content-type", "application/json")
+                .addHeader("cache-control", "no-cache")
+                .addHeader("postman-token", "f848a2cb-0a86-8a8d-8897-81852c81bf1a")
+                .build();
+
+//        Response response = client.newCall(request).execute();
+
+        Call call = client.newCall(request);
+
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+                String res = response.body().string();
+
+                try {
+                    JSONArray allPins = new JSONArray(res);
+
+
+                    for (int i = 0; i < allPins.length(); i++) {
+
+                        JSONObject jj = allPins.getJSONObject(i);
+
+                        if (jj.getString("BackpackerId") != Const.BpId)
+                        {
+
+                            final MarkerOptions markerOptions = new MarkerOptions();
+                            markerOptions.position(new LatLng(jj.getDouble("Lat"), jj.getDouble("Lng")));
+                            markerOptions.title(jj.getString("Name"));
+
+
+
+                            int height = 150;
+                            int width = 150;
+                            BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.person);
+                            Bitmap b=bitmapdraw.getBitmap();
+                            Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
+
+                            markerOptions.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
+
+
+
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+
+
+                                    allPersons.add(mMap.addMarker(markerOptions));
+
+                                }
+                            });
+
+
+                        }
+                    }
+
+                    Log.e("Pins", "Planted : " + allPins.length());
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+
+
+                }
+
+            }
+        });
+
+
+
+
+    }
+
+
+    void getOtherPins(String Expid) throws IOException, JSONException {
+        OkHttpClient client = new OkHttpClient();
+
+        String url = "https://backpackersapp.azurewebsites.net/api/Users/Expeditions/details/" + Expid;
+
+        Log.e("f-url", url);
+        Request request = new Request.Builder().url(url)
+                .addHeader("content-type", "application/json")
+                .addHeader("cache-control", "no-cache")
+                .addHeader("postman-token", "f848a2cb-0a86-8a8d-8897-81852c81bf1a")
+                .build();
+
+        //Response response = client.newCall(request).execute();
+
+        Call call = client.newCall(request);
+
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+
+                String res = response.body().string();
+
+                JSONObject jj = null;
+                try {
+                    jj = new JSONObject(res);
+
+                    JSONArray markers = jj.getJSONArray("Markers");
+
+
+                    for (int i = 0; i < markers.length(); i++) {
+
+                        JSONObject jj1 = markers.getJSONObject(i);
+                        final MarkerOptions markerOptions = new MarkerOptions();
+                        markerOptions.position(new LatLng(jj1.getDouble("Lat"), jj1.getDouble("Lng")));
+                        markerOptions.title(jj1.getString("Name"));
+                        //markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+
+                        int height = 150;
+                        int width = 150;
+                        BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.location);
+                        Bitmap b=bitmapdraw.getBitmap();
+                        Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
+
+                        markerOptions.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
+
+
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mMap.addMarker(markerOptions);
+                            }
+                        });
+
+                    }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+
+            }
+        });
+
+
+
+
 
     }
 
